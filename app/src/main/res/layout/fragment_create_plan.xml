@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".CreatePlanFragment">
 
-
     <Button
         android:id="@+id/btnFinish"
         android:layout_width="wrap_content"
@@ -29,4 +28,90 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="50dp"
         android:text="Cancel" />
+
+    <TextView
+        android:id="@+id/tvDurationField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="257dp"
+        android:text="Duration"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvDateField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNameLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="51dp"
+        android:text="Date"
+        android:textSize="16sp" />
+
+    <Switch
+        android:id="@+id/switchEnvironment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="292dp"
+        android:textOff="Outdoor"
+        android:textOn="Indoor"
+        android:textSize="20sp" />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="161dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="463dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:startYear="2021" />
+
+    <EditText
+        android:id="@+id/etPlanName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="60dp"
+        android:layout_toEndOf="@+id/tvNameLabel"
+        android:hint="Name your plan">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/tvNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="76dp"
+        android:text="Plan Name"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvAddPreferencesField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="106dp"
+        android:layout_marginBottom="125dp"
+        android:clickable="true"
+        android:text="Advanced Preferences"
+        android:textColor="#2196F3"
+        android:textSize="20sp" />
+
+
 </RelativeLayout>

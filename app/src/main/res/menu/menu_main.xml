@@ -3,6 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/miCalendar"
+        android:icon="@drawable/ic_round_calendar_today_24"
+        android:iconTint="@color/peach_puff"
+        android:title="Calendar"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/miNotifications"
+        android:icon="@drawable/ic_round_notifications_24"
+        android:iconTint="@color/peach_puff"
+        android:title="Notifications"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/miProfile"
         android:icon="@drawable/ic_baseline_person_24"
         android:iconTint="@color/peach_puff"

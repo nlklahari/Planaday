@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    FloatingActionButton faBtnCreatePlan;
+    FloatingActionButton fabCreatePlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +26,16 @@ public class MainActivity extends AppCompatActivity {
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
-        faBtnCreatePlan = findViewById(R.id.fabCreatePlan);
+        fabCreatePlan = findViewById(R.id.fabCreatePlan);
 
-        faBtnCreatePlan.setOnClickListener(new View.OnClickListener() {
+        fabCreatePlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new CreatePlanFragment();
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                final FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.flContainer, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
     }
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+            case R.id.miCalendar:
+
         }
         return super.onOptionsItemSelected(item);
     }
