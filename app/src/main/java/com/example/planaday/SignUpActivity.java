@@ -15,6 +15,7 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class SignUpActivity extends AppCompatActivity {
+
     private static final String TAG = SignUpActivity.class.getSimpleName();
 
     private EditText etName;
@@ -47,7 +48,13 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    // Verifies credentials and creates a new account
+    /**
+     * Verifies credentials and creates a new account
+     * @param name
+     * @param email
+     * @param username
+     * @param password
+     */
     private void signUp(String name, String email, String username, String password) {
         ParseUser user = new ParseUser();
         user.put("name", name);
@@ -72,7 +79,9 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    // Takes user to main activity
+    /**
+     * Takes user to main activity
+     */
     private void launchMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         this.startActivity(intent);

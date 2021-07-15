@@ -44,11 +44,13 @@ public class CreatePlanFragment extends Fragment {
         btnFinish = view.findViewById(R.id.btnFinish);
         btnCancel = view.findViewById(R.id.btnCancel);
 
+        APIClient client = new APIClient();
+
         // Finish Button
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                APIClient.getEventParticipants(1);
+                client.getEventParticipants(1);
             }
         });
 
