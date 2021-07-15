@@ -20,8 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
-    private Button btnSignUp;
-
     private TextView tvSignUp;
 
     @Override
@@ -31,14 +29,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // Takes user directly to main activity if already logged in
         if (ParseUser.getCurrentUser() != null) {
+            Log.i(TAG, "User already logged in, directly launched main activity");
             launchMainActivity();
         }
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        btnSignUp = findViewById(R.id.btnSignUp);
-
         tvSignUp = findViewById(R.id.tvSignUp);
 
         // Log In Button
@@ -52,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Sign Up Button
+        // Sign Up through text view
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 launchSignUpActivity();
             }
         });
-
     }
 
     // Verifies login and takes user to main activity
@@ -76,19 +72,22 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 launchMainActivity();
-                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Successful login", e);
+                Toast.makeText(LoginActivity.this, "Successfully logged in!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     // Takes user to Sign Up Activity
     private void launchSignUpActivity() {
+        Log.i(TAG, "Launched sign up activity");
         Intent intent = new Intent(this, SignUpActivity.class);
         this.startActivity(intent);
     }
 
     // Takes user to main activity
     private void launchMainActivity() {
+        Log.i(TAG, "Launched main activity");
         Intent intent = new Intent(this, MainActivity.class);
         this.startActivity(intent);
         finish();
