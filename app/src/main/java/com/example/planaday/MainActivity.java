@@ -1,7 +1,5 @@
 package com.example.planaday;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                                 // Logic to handle location object
                                 Double latitude = location.getLatitude();
                                 Double longitude = location.getLongitude();
+                                lastKnownLocation = location;
                             }
                         }
                     });

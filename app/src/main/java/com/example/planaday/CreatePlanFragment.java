@@ -18,8 +18,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class CreatePlanFragment extends Fragment {
 
-    Button btnFinish;
-    Button btnCancel;
+    private Button btnFinish;
+    private Button btnCancel;
 
     public CreatePlanFragment() {
         // Required empty public constructor
@@ -54,10 +54,11 @@ public class CreatePlanFragment extends Fragment {
             }
         });
 
+        // Cancel Button - Returns to MainActivity
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChildFragmentManager().popBackStackImmediate();
+                getActivity().onBackPressed();
             }
         });
 
