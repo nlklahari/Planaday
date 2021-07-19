@@ -104,12 +104,12 @@ Allow the app to build a schedule to enjoy a day based on user preferences.
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
-<img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.22.57%20AM.png" width=600>
+<img src="https://github.com/nlklahari/Planaday/blob/master/Screen%20Shot%202021-07-12%20at%209.22.57%20AM.png" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 |      |      |      | | |. |
 |------------|-------------|------------- | -------------|-- | -- |
-| <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.27.48%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.28.09%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.28.27%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.28.45%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.29.06%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.29.21%20AM.png" width="250"> |
+| <img src="https://github.com/nlklahari/Planaday/blob/master/Screen%20Shot%202021-07-12%20at%209.27.48%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/master/Screen%20Shot%202021-07-12%20at%209.28.09%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.28.27%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.28.45%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.29.06%20AM.png" width="250"> | <img src="https://github.com/nlklahari/Planaday/blob/main/Screen%20Shot%202021-07-12%20at%209.29.21%20AM.png" width="250"> |
 
 
 
