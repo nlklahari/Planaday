@@ -29,6 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+//
+//        if (getIntent().getBooleanExtra("EXIT", false)) {
+//            finish();
+//        }
 
         // Takes user directly to main activity if already logged in
         if (ParseUser.getCurrentUser() != null) {
