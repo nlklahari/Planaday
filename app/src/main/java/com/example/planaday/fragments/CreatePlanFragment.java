@@ -1,4 +1,4 @@
-package com.example.planaday;
+package com.example.planaday.fragments;
 
 import android.os.Bundle;
 
@@ -10,6 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
+import com.example.planaday.R;
+import com.example.planaday.networking.APIClients;
+import com.example.planaday.networking.BoredAPIRequests;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +27,13 @@ import org.jetbrains.annotations.NotNull;
  */
 public class CreatePlanFragment extends Fragment {
 
+
+    private EditText etPlanName;
+    private DatePicker dpPlanDate;
+    private TimePicker tpPlanTime;
+    private Switch switchEnvironment;
+
+    private TextView tvAdvancedPreferences;
     private Button btnFinish;
     private Button btnCancel;
 
@@ -41,16 +57,33 @@ public class CreatePlanFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        etPlanName = view.findViewById(R.id.etPlanName);
+        // date picker and time picker
+        switchEnvironment = view.findViewById(R.id.switchEnvironment);
+
+        tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
         btnFinish = view.findViewById(R.id.btnFinish);
         btnCancel = view.findViewById(R.id.btnCancel);
 
-        APIClient client = new APIClient();
+        APIClients client = new APIClients();
+
+
+        // Advanced Preferences
+        tvAdvancedPreferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         // Finish Button
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                client.getEventParticipants(1);
+                BoredAPIRequests.getEventParticipants(1);
+                // TODO-----------------------------
+                // Algorithm to retrieve correct plan
+                // Upload that plan to Parse
             }
         });
 
@@ -61,8 +94,5 @@ public class CreatePlanFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-
-
-
     }
 }

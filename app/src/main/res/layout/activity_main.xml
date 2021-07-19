@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             android:layout_marginBottom="50dp"
             android:clickable="true"
             android:contentDescription="Create Plan"
+            android:tooltipText="Create a new plan"
             app:backgroundTint="@color/blush"
             app:elevation="5dp"
             app:srcCompat="@android:drawable/ic_input_add" />
