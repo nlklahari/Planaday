@@ -69,6 +69,7 @@ public class SavedPlansFragment extends Fragment {
         }
 
         final FragmentManager fragmentManager = getChildFragmentManager();
+
         fabCreatePlan = view.findViewById(R.id.fabCreatePlan);
 
         // Floating Action Button to create a new plan
@@ -86,7 +87,6 @@ public class SavedPlansFragment extends Fragment {
 
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-
     }
 
     /**

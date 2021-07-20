@@ -6,14 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/flContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/flContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.flContainer, fragment);
         transaction.commit();
-
     }
 
     @Override
