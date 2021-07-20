@@ -89,7 +89,6 @@ public class SavedPlansFragment extends Fragment {
 
     }
 
-
     /**
      * Fetches the user's current location if user allows access to location
      */

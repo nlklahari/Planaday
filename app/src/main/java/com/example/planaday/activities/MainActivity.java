@@ -31,22 +31,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseUser;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String KEY_LOCATION = "location";
-    private static final int LOCATION_PERMISSION_CODE = 1;
-
     private final FragmentManager fragmentManager = getSupportFragmentManager();
-
-    // The entry point to the Fused Location Provider.
-    private FusedLocationProviderClient fusedLocationProviderClient;
-
-    // The geographical location where the device is currently located. That is, the last-known
-    // location retrieved by the Fused Location Provider.
-    private Location lastKnownLocation;
-
-    FloatingActionButton fabCreatePlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

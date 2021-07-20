@@ -4,5 +4,6 @@ public class PlanadayEvent {
     // name
     // duration
     // type
-    //
+    // distance
+    // indoor
 }

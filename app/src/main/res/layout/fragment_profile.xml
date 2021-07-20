@@ -1,14 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
+    <RelativeLayout
+        android:id="@+id/rlBlock1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:padding="@android:dimen/app_icon_size"
+        android:background="@drawable/profile_block1_bg">
 
-    <Button
-        android:id="@+id/btnLogOut"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/ivProfile_ProfileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/profile_pic_bg"
+            app:srcCompat="@drawable/ic_baseline_person_24"
+            tools:src="@tools:sample/avatars"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivProfile_ProfileImage"
+            android:layout_marginTop="15dp"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            tools:text="Lahari Nidadavolu" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/rlBlock2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log Out" />
+        android:layout_below="@+id/rlBlock1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/tvMyPastPlansField"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:text="My Past Plans"
+                android:background="@drawable/profile_options_bg"
+                android:textAlignment="viewStart"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvAccountSettingsField"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Account Settings"
+                android:background="@drawable/profile_options_bg"
+                android:textAlignment="viewStart"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvNotifications"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Notifications"
+                android:background="@drawable/profile_options_bg"
+                android:textAlignment="viewStart"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvpersonalizePlans"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="10dp"
+                android:layout_marginTop="15dp"
+                android:text="Personalize Plans"
+                android:background="@drawable/profile_options_bg"
+                android:textAlignment="viewStart"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvLogOut"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/profile_options_bg"
+                android:clickable="true"
+                android:padding="10dp"
+                android:text="Log Out"
+                android:textAlignment="viewStart"
+                android:textColorLink="@color/dark_purple"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
