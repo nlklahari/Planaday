@@ -22,6 +22,17 @@ public class PlanadayEvent extends ParseObject {
 
     public PlanadayEvent() {}
 
+    public static PlanadayEvent[] fromJSONArray(JSONArray results, ParseUser user) throws JSONException {
+        PlanadayEvent[] events = new PlanadayEvent[results.length()];
+        for (int i = 0; i < results.length(); i++) {
+            PlanadayEvent newEvent = new PlanadayEvent();
+            newEvent.setUser(user);
+            newEvent.setDuration(results.getInt(i));
+            // TODO
+        }
+        return events;
+    }
+
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
     }

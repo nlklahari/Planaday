@@ -12,13 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.example.planaday.R;
+import com.example.planaday.fragments.widgets.DatePickerFragment;
+import com.example.planaday.fragments.widgets.TimePickerFragment;
 import com.example.planaday.networking.APIClients;
 import com.example.planaday.networking.BoredAPIRequests;
 
@@ -30,7 +30,8 @@ import org.jetbrains.annotations.NotNull;
 public class CreatePlanFragment extends Fragment {
 
     private EditText etPlanName;
-    private DatePicker dpPlanDate;
+    private TextView tvDateField;
+    private TextView tvSelectedDate;
     public TextView tvStartTimeField;
     public TextView tvSelectedStartTime;
     public TextView tvEndTimeField;
@@ -70,7 +71,8 @@ public class CreatePlanFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         etPlanName = view.findViewById(R.id.etPlanName);
-        // date picker
+        tvDateField = view.findViewById(R.id.tvDateField);
+        tvSelectedDate = view.findViewById(R.id.tvSelectedDate);
         tvStartTimeField = view.findViewById(R.id.tvStartTimeField);
         tvSelectedStartTime = view.findViewById(R.id.tvSelectedStartTime);
         tvEndTimeField = view.findViewById(R.id.tvEndTimeField);
@@ -82,6 +84,15 @@ public class CreatePlanFragment extends Fragment {
         btnCancel = view.findViewById(R.id.btnCancel);
 
         APIClients client = new APIClients();
+
+        // Date field
+        tvDateField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerFragment newFragment = new DatePickerFragment(tvSelectedDate);
+                newFragment.show(getChildFragmentManager(), "datePicker");
+            }
+        });
 
         // Start time field
         tvStartTimeField.setOnClickListener(new View.OnClickListener() {

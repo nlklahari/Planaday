@@ -1,20 +1,15 @@
-package com.example.planaday.fragments;
+package com.example.planaday.fragments.widgets;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.text.format.Time;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.fragment.app.DialogFragment;
 
 import com.example.planaday.R;
-import com.google.android.material.timepicker.TimeFormat;
-
-import org.w3c.dom.Text;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
