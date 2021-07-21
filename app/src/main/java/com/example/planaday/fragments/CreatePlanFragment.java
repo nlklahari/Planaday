@@ -1,5 +1,6 @@
 package com.example.planaday.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -17,8 +18,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.planaday.R;
+import com.example.planaday.activities.PlanDetailsActivity;
 import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.fragments.widgets.TimePickerFragment;
+import com.example.planaday.models.Plan;
 import com.example.planaday.networking.APIClients;
 import com.example.planaday.networking.BoredAPIRequests;
 
@@ -126,7 +129,12 @@ public class CreatePlanFragment extends Fragment {
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: verification to ensure that user entered all required preferences
                 BoredAPIRequests.getEventParticipants(1);
+                Plan plan = new Plan();
+                Intent intent = new Intent(getActivity(), PlanDetailsActivity.class);
+                intent.putExtra("plan", plan);
+                getContext().startActivity(intent);
                 // TODO-----------------------------
                 // Algorithm to retrieve correct plan
                 // Upload that plan to Parse
