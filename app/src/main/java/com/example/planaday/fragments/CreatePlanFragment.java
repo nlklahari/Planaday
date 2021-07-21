@@ -1,8 +1,5 @@
 package com.example.planaday.fragments;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -11,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +29,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public class CreatePlanFragment extends Fragment {
 
-
     private EditText etPlanName;
     private DatePicker dpPlanDate;
-    private TimePicker tpPlanTime;
+    public TextView tvStartTimeField;
+    public TextView tvSelectedStartTime;
+    public TextView tvEndTimeField;
+    public TextView tvSelectedEndTime;
     private Switch switchEnvironment;
 
     private TextView tvAdvancedPreferences;
@@ -72,7 +70,11 @@ public class CreatePlanFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         etPlanName = view.findViewById(R.id.etPlanName);
-        // date picker and time picker
+        // date picker
+        tvStartTimeField = view.findViewById(R.id.tvStartTimeField);
+        tvSelectedStartTime = view.findViewById(R.id.tvSelectedStartTime);
+        tvEndTimeField = view.findViewById(R.id.tvEndTimeField);
+        tvSelectedEndTime = view.findViewById(R.id.tvSelectedEndTime);
         switchEnvironment = view.findViewById(R.id.switchEnvironment);
 
         tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
@@ -81,6 +83,25 @@ public class CreatePlanFragment extends Fragment {
 
         APIClients client = new APIClients();
 
+        // Start time field
+        tvStartTimeField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerFragment newFragment = new TimePickerFragment(tvSelectedStartTime);
+                newFragment.show(getChildFragmentManager(), "startTimePicker");
+            }
+        });
+
+        // End time field
+        tvEndTimeField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new TimePickerFragment(tvSelectedEndTime);
+                newFragment.show(getChildFragmentManager(), "endTimePicker");
+            }
+        });
+
+        // TODO: Verify that time picker values are valid
 
         // Advanced Preferences
         tvAdvancedPreferences.setOnClickListener(new View.OnClickListener() {
@@ -110,25 +131,44 @@ public class CreatePlanFragment extends Fragment {
         });
     }
 
-    public static class TimePickerFragment extends DialogFragment
-            implements TimePickerDialog.OnTimeSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current time as the default values for the picker
-            final Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-
-            // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
-                    DateFormat.is24HourFormat(getActivity()));
-        }
-
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            // Do something with the time chosen by the user
-        }
-    }
-
+//    public static class StartTimePickerFragment extends TimePickerFragment {
+//
+//        private TextView tvSelectedStartTime;
+//
+//        @Override
+//        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//            tvSelectedStartTime = getActivity().findViewById(R.id.tvSelectedStartTime);
+//            String time = "";
+//            if (hourOfDay < 10) {
+//                time += 0;
+//            }
+//            time += hourOfDay + ":";
+//            if (minute < 10) {
+//                time += 0;
+//            }
+//            time += String.valueOf(minute);
+//            tvSelectedStartTime.setText(time);
+//        }
+//    }
+//
+//    public static class EndTimePickerFragment extends TimePickerFragment {
+//
+//        private TextView tvSelectedEndTime;
+//
+//        @Override
+//        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//            tvSelectedEndTime = getActivity().findViewById(R.id.tvSelectedEndTime);
+//            String time = "";
+//            if (hourOfDay < 10) {
+//                time += 0;
+//            }
+//            time += hourOfDay + ":";
+//            if (minute < 10) {
+//                time += 0;
+//            }
+//            time += String.valueOf(minute);
+//            tvSelectedEndTime.setText(time);
+//        }
+//    }
 
 }

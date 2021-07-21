@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,14 +31,25 @@
         android:text="Cancel" />
 
     <TextView
-        android:id="@+id/tvDurationField"
+        android:id="@+id/tvStartTimeField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="257dp"
-        android:text="Duration"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="258dp"
+        android:text="Start Time"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvEndTimeField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="248dp"
+        android:layout_marginTop="261dp"
+        android:text="End Time"
         android:textSize="16sp" />
 
     <TextView
@@ -46,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="55dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="316dp"
         android:text="Indoor"
         android:textSize="16sp" />
@@ -68,8 +80,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="372dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="377dp"
         android:text="Setting"
         android:textSize="16sp" />
 
@@ -79,8 +91,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNameLabel"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="99dp"
         android:text="Date"
         android:textSize="16sp" />
 
@@ -97,19 +109,6 @@
         android:textOn="Indoor"
         android:textSize="20sp" />
 
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="166dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="419dp"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        android:startYear="2021" />
-
     <EditText
         android:id="@+id/etPlanName"
         android:layout_width="wrap_content"
@@ -120,7 +119,25 @@
         android:layout_toEndOf="@+id/tvNameLabel"
         android:hint="Name your plan">
 
-    </EditText>
+    </EditText><![CDATA[
+
+
+
+    android:textSize="16sp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ]]>
 
     <TextView
         android:id="@+id/tvNameLabel"
@@ -128,24 +145,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="42dp"
-        android:layout_marginTop="76dp"
-        android:text="Plan Name"/>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <CheckBox android:id="@+id/checkbox_meat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Option 1" />
-        <CheckBox android:id="@+id/checkbox_cheese"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Option 2" />
-    </LinearLayout>
-        android:textSize="16sp" />
+        android:layout_marginStart="77dp"
+        android:layout_marginTop="80dp"
+        android:text="Plan Name" />
 
     <TextView
         android:id="@+id/tvAdvancedPreferences"
@@ -160,6 +162,39 @@
         android:text="Advanced Preferences"
         android:textColor="#2196F3"
         android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="258dp"
+        android:background="@color/blush"
+        android:src="@drawable/ic_baseline_access_time_24" />
+
+    <TextView
+        android:id="@+id/tvSelectedStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="261dp"
+        android:layout_marginEnd="216dp"
+        android:textAlignment="viewStart"
+        tools:text="21:30" />
+
+    <TextView
+        android:id="@+id/tvSelectedEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="266dp"
+        android:layout_marginEnd="45dp"
+        android:textAlignment="viewStart"
+        tools:text="22:30" />
 
 
 </RelativeLayout>

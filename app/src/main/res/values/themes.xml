@@ -13,4 +13,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorControlActivated">@color/light_salmon</item>
+        <item name="colorAccent">@color/violet_crayola</item>
+        <item name="colorOnPrimary">@color/violet_crayola</item>
+    </style>
 </resources>

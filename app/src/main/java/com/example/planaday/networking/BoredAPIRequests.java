@@ -3,6 +3,7 @@ package com.example.planaday.networking;
 import android.util.Log;
 
 import com.example.planaday.models.BoredAPIEvent;
+import com.example.planaday.models.PlanadayEvent;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +24,10 @@ public class BoredAPIRequests {
             @Override
             public void onResponse(Call<BoredAPIEvent> call, Response<BoredAPIEvent> response) {
                 Log.d(TAG, response.body().getActivity());
+                PlanadayEvent event = new PlanadayEvent();
+                event.setEventName(response.body().getActivity());
+                event.setDuration(1);
+                event.setPrice(0);
                 // TODO something here to store the event
             }
 
