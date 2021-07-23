@@ -1,7 +1,8 @@
-package com.example.planaday;
+package com.example.planaday.networking;
 
 import android.app.Application;
 
+import com.example.planaday.R;
 import com.example.planaday.models.Plan;
 import com.example.planaday.models.PlanadayEvent;
 import com.parse.Parse;

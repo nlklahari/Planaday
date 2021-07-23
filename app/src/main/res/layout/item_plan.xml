@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="5dp" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/profile_options_bg">
 
     <TextView
-        android:id="@+id/tvEventName"
+        android:id="@+id/tvPlanName"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:textSize="30sp"
-        tools:text="Event #1" />
+        android:textSize="24sp"
+        tools:text="Plan #1" />
 
     <TextView
         android:id="@+id/tvPlanTime"
@@ -22,7 +23,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="5dp"
-        android:layout_toEndOf="@+id/tvEventName"
+        android:layout_toEndOf="@+id/tvPlanName"
         android:textAlignment="center"
         android:textSize="16sp"
         tools:text="4:30pm - 9:30pm" />
@@ -32,9 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvPlanTime"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvEventName"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/tvPlanName"
         android:textAlignment="textEnd"
         android:textSize="16sp"
         tools:text="5 hrs" />
@@ -44,25 +45,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvPlanTime"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/tvPlanDuration"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
         android:textAlignment="textEnd"
         android:textSize="16sp"
         tools:text="$100" />
 
     <TextView
-        android:id="@+id/tvEventDistance"
+        android:id="@+id/tvPlanDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPlanTime"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="5dp"
+        android:layout_below="@+id/tvPlanName"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_toEndOf="@+id/tvPlanPrice"
-        android:textAlignment="textEnd"
-        android:textSize="16sp"
-        tools:text="200 mi" />
+        tools:text="06/06/3032" />
 
 </RelativeLayout>

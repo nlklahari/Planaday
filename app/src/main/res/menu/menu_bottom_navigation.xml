@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_saved_plans"
+        android:title="Saved Plans"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_bookmark_24"
+        android:iconTint="@color/blush" />
+
+    <item
+        android:id="@+id/action_explore"
+        android:title="Explore Page"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:showAsAction="always"
+        android:iconTint="@color/blush"/>
+</menu>

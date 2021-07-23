@@ -36,9 +36,31 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="258dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="167dp"
         android:text="Start Time"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvPriceField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="208dp"
+        android:text="Price Range"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvDistanceField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="262dp"
+        android:text="Distance"
         android:textSize="16sp" />
 
     <TextView
@@ -47,8 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="248dp"
-        android:layout_marginTop="261dp"
+        android:layout_marginStart="219dp"
+        android:layout_marginTop="166dp"
         android:text="End Time"
         android:textSize="16sp" />
 
@@ -69,20 +91,33 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="313dp"
+        android:layout_marginStart="267dp"
+        android:layout_marginTop="320dp"
         android:text="Outdoor"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/tvSettingField"
+        android:id="@+id/tvIndividualOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="377dp"
-        android:text="Setting"
+        android:layout_marginTop="363dp"
+        android:text="Individual"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvGroupOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="268dp"
+        android:layout_marginTop="366dp"
+        android:text="Group"
         android:textSize="16sp" />
 
     <TextView
@@ -91,8 +126,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNameLabel"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="99dp"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="28dp"
         android:text="Date"
         android:textSize="16sp" />
 
@@ -105,6 +140,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="178dp"
         android:layout_marginTop="313dp"
+        android:textOff="Outdoor"
+        android:textOn="Indoor"
+        android:textSize="20sp" />
+
+    <Switch
+        android:id="@+id/switchSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="178dp"
+        android:layout_marginTop="365dp"
         android:textOff="Outdoor"
         android:textOn="Indoor"
         android:textSize="20sp" />
@@ -137,7 +185,39 @@
 
 
 
+
+
+
+
+
+
+
+
     ]]>
+
+    <EditText
+        android:id="@+id/etMaxPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="73dp"
+        android:layout_marginTop="197dp"
+        android:layout_toEndOf="@+id/tvNameLabel"
+        android:hint="Max Price">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/etMaxDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="251dp"
+        android:layout_toEndOf="@+id/tvNameLabel"
+        android:hint="Max Distance">
+
+    </EditText>
 
     <TextView
         android:id="@+id/tvNameLabel"
@@ -145,8 +225,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="77dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="70dp"
         android:text="Plan Name" />
 
     <TextView
@@ -169,9 +249,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="258dp"
-        android:background="@color/blush"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="165dp"
+        android:background="@color/dark_purple"
         android:src="@drawable/ic_baseline_access_time_24" />
 
     <TextView
@@ -180,8 +260,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="261dp"
-        android:layout_marginEnd="216dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="220dp"
         android:textAlignment="viewStart"
         tools:text="21:30" />
 
@@ -191,9 +271,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="204dp"
-        android:layout_marginEnd="207dp"
+        android:layout_marginTop="123dp"
+        android:layout_marginEnd="137dp"
         android:textAlignment="viewStart"
+        android:textSize="16sp"
         tools:text="06/21/21" />
 
     <TextView
@@ -202,10 +283,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="266dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="72dp"
         android:textAlignment="viewStart"
         tools:text="22:30" />
+
+    <CheckBox
+        android:id="@+id/cbFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="240dp"
+        android:text="Food" />
+
+    <CheckBox
+        android:id="@+id/cbRecreational"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="192dp"
+        android:text="Recreational" />
 
 
 </RelativeLayout>

@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rlPlanDetailsBlock1">
+        android:id="@+id/rlPlanDetailsBlock1">`
 
         <TextView
             android:id="@+id/tvPlanName"
@@ -34,7 +34,7 @@
             tools:text="6/21" />
 
         <TextView
-            android:id="@+id/tvTotalPrice"
+            android:id="@+id/tvPlanPrice"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

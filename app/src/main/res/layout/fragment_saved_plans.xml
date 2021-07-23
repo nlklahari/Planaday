@@ -28,10 +28,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="-2dp" />
+        android:layout_marginEnd="0dp" />
 
     <FrameLayout
         android:id="@+id/flContainer_SavedPlans"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent" />
 </RelativeLayout>

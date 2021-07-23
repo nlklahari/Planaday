@@ -7,18 +7,22 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.Date;
+
 @ParseClassName("Plan")
 public class Plan extends ParseObject {
 
-    private static final String KEY_USER = "user";
+    public static final String KEY_USER = "user"; // public to filter query results
     private static final String KEY_NAME = "name";
-    private static final String KEY_DURATION = "duration";
     private static final String KEY_DATE = "date";
+    private static final String KEY_DURATION = "duration";
+    private static final String KEY_TIME = "time";
+    private static final String KEY_PRICE = "price";
     private static final String KEY_EVENTS = "events";
     private static final String KEY_TYPES = "types"; // categories of types that this event falls under
     private static final String KEY_ENVIRONMENT = "environment"; //indoor or outdoor
     private static final String KEY_SETTING = "setting"; //individual or group
-    private static final String KEY_PRICE = "price";
+
 
     public Plan() {}
 
@@ -30,20 +34,45 @@ public class Plan extends ParseObject {
         put(KEY_USER, parseUser);
     }
 
-    public String getEventName() {
+    public String getPlanName() {
         return getString(KEY_NAME);
     }
 
-    public void setEventName(String name) {
+    public void setPlanName(String name) {
         put(KEY_NAME, name);
     }
 
-    public String getDuration() {
-        return getString(KEY_DURATION);
+    public Date getPlanDate() {
+        return getDate(KEY_DATE);
+    }
+
+    // Modify type to just String?
+    public void setPlanDate(Date date) {
+        put(KEY_DATE, date);
+    }
+
+    public int getDuration() {
+        return getInt(KEY_DURATION);
     }
 
     public void setDuration(int duration) {
         put(KEY_DURATION, duration);
+    }
+
+    public String getStringTime() {
+        return getString(KEY_TIME);
+    }
+
+    public void setStringTime(String time) {
+        put(KEY_TIME, time);
+    }
+
+    public double getPrice() {
+        return getDouble(KEY_PRICE);
+    }
+
+    public void setPrice(int price) {
+        put(KEY_PRICE, price);
     }
 
     public PlanadayEvent[] getEvents() throws JSONException {
@@ -80,11 +109,4 @@ public class Plan extends ParseObject {
         put(KEY_SETTING, setting);
     }
 
-    public double getPrice() {
-        return getDouble(KEY_PRICE);
-    }
-
-    public void setPrice(int price) {
-        put(KEY_PRICE, price);
-    }
 }

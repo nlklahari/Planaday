@@ -14,21 +14,32 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.planaday.R;
 import com.example.planaday.activities.MainActivity;
+import com.example.planaday.adapters.SavedPlansAdapter;
+import com.example.planaday.models.Plan;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +49,10 @@ public class SavedPlansFragment extends Fragment {
     private static final String KEY_LOCATION = "location";
     private static final int LOCATION_PERMISSION_CODE = 1;
     private static final String TAG = SavedPlansFragment.class.getSimpleName();
+
+    private RecyclerView rvSavedPlans;
+    protected List<Plan> savedPlans;
+    private SavedPlansAdapter adapter;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -70,6 +85,7 @@ public class SavedPlansFragment extends Fragment {
 
         final FragmentManager fragmentManager = getChildFragmentManager();
 
+        rvSavedPlans = view.findViewById(R.id.rvSavedPlans);
         fabCreatePlan = view.findViewById(R.id.fabCreatePlan);
 
         // Floating Action Button to create a new plan
@@ -85,8 +101,39 @@ public class SavedPlansFragment extends Fragment {
             }
         });
 
+        savedPlans = new ArrayList<>();
+        adapter = new SavedPlansAdapter(getContext(), savedPlans);
+
+        rvSavedPlans.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvSavedPlans.setLayoutManager(layoutManager);
+        queryPlans();
+
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+    }
+
+    private void queryPlans() {
+        Log.i(TAG, "Querying posts");
+        ParseQuery<Plan> query = ParseQuery.getQuery(Plan.class);
+        query.include(Plan.KEY_USER);
+        query.setLimit(20);
+        query.addDescendingOrder("date");
+        query.findInBackground(new FindCallback<Plan>() {
+            @Override
+            public void done(List<Plan> plans, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "issue with getting plans");
+                    return;
+                }
+
+                for (Plan p: plans) {
+                    Log.d(TAG, p.getPlanName());
+                }
+                savedPlans.addAll(plans);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**

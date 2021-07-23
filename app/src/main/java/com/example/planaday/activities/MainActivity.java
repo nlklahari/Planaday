@@ -23,30 +23,49 @@ import android.widget.Toast;
 
 import com.example.planaday.R;
 import com.example.planaday.fragments.CreatePlanFragment;
+import com.example.planaday.fragments.ExploreFragment;
 import com.example.planaday.fragments.ProfileFragment;
 import com.example.planaday.fragments.SavedPlansFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseUser;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Saved Plans Fragment
-        Fragment fragment = new SavedPlansFragment();
-        final FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.flContainer, fragment);
-        transaction.commit();
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
+                switch (item.getItemId()) {
+                    case R.id.action_explore:
+                        fragment = new ExploreFragment();
+                        break;
+                    case R.id.action_saved_plans:
+                    default:
+                        fragment = new SavedPlansFragment();
+                        break;
+                }
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
+            }
+        });
+        bottomNavigationView.setSelectedItemId(R.id.action_saved_plans);
     }
 
     @Override
@@ -70,4 +89,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
