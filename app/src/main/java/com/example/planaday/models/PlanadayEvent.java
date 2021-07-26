@@ -7,6 +7,9 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ParseClassName("Event")
 public class PlanadayEvent extends ParseObject {
 
@@ -18,12 +21,11 @@ public class PlanadayEvent extends ParseObject {
     private static final String KEY_ENVIRONMENT = "environment"; //indoor or outdoor
     private static final String KEY_SETTING = "setting"; //individual or group
     private static final String KEY_PRICE = "price";
-    private static final String KEY_PARTICIPANTS = "participants";
 
     public PlanadayEvent() {}
 
-    public static PlanadayEvent[] fromJSONArray(JSONArray results, ParseUser user) throws JSONException {
-        PlanadayEvent[] events = new PlanadayEvent[results.length()];
+    public static List<PlanadayEvent> fromJSONArray(JSONArray results, ParseUser user) throws JSONException {
+        List<PlanadayEvent> events = new ArrayList<>();
         for (int i = 0; i < results.length(); i++) {
             PlanadayEvent newEvent = new PlanadayEvent();
             newEvent.setUser(user);
@@ -100,13 +102,5 @@ public class PlanadayEvent extends ParseObject {
 
     public void setPrice(int price) {
         put(KEY_PRICE, price);
-    }
-
-    public int getParticipants() {
-        return getInt(KEY_PARTICIPANTS);
-    }
-
-    public void setParticipants(int participants) {
-        put(KEY_PARTICIPANTS, participants);
     }
 }

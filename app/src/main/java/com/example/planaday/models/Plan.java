@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.Date;
+import java.util.List;
 
 @ParseClassName("Plan")
 public class Plan extends ParseObject {
@@ -19,9 +20,10 @@ public class Plan extends ParseObject {
     private static final String KEY_TIME = "time";
     private static final String KEY_PRICE = "price";
     private static final String KEY_EVENTS = "events";
-    private static final String KEY_TYPES = "types"; // categories of types that this event falls under
     private static final String KEY_ENVIRONMENT = "environment"; //indoor or outdoor
     private static final String KEY_SETTING = "setting"; //individual or group
+
+    private List<PlanadayEvent> events;
 
 
     public Plan() {}
@@ -75,22 +77,17 @@ public class Plan extends ParseObject {
         put(KEY_PRICE, price);
     }
 
-    public PlanadayEvent[] getEvents() throws JSONException {
+    public List<PlanadayEvent> getEvents() throws JSONException {
         JSONArray results = getJSONArray(KEY_EVENTS);
         return PlanadayEvent.fromJSONArray(results, getUser());
     }
 
-    public String[] getTypes() throws JSONException {
-        JSONArray results = getJSONArray(KEY_TYPES);
-        String[] types = new String[results.length()];
-        for (int i = 0; i < results.length(); i++) {
-            types[i] = results.get(i).toString();
-        }
-        return types;
+    public void addEvent(PlanadayEvent event) {
+        events.add(event);
     }
 
-    public void setTypes(String[] types) {
-        put(KEY_TYPES, types);
+    public void setEvents(List<PlanadayEvent> events) {
+        put(KEY_EVENTS, events);
     }
 
     public String getEnvironment() {

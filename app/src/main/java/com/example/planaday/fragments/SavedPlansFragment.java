@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.planaday.R;
+import com.example.planaday.SwipeToDeleteCallback;
 import com.example.planaday.adapters.SavedPlansAdapter;
 import com.example.planaday.models.Plan;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -81,6 +83,8 @@ public class SavedPlansFragment extends Fragment {
         rvSavedPlans.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvSavedPlans.setLayoutManager(layoutManager);
+
+        setUpRecyclerView();
         queryPlans();
 
         // Construct a FusedLocationProviderClient.
@@ -109,6 +113,15 @@ public class SavedPlansFragment extends Fragment {
             }
         });
     }
+
+    private void setUpRecyclerView() {
+        rvSavedPlans.setAdapter(adapter);
+        rvSavedPlans.setLayoutManager(new LinearLayoutManager(getContext()));
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(rvSavedPlans);
+    }
+
 
     /**
      * Fetches the user's current location if user allows access to location

@@ -22,26 +22,47 @@ public class BoredAPIRequests {
      *  Get a random activity based on the number of participants
      * @param participants
      */
-    public static void getEventParticipants(int participants/*, BoredAPIListener listener*/) {
+    public static void getEventParticipants(String key, int participants, APIRequestResponseListener listener) {
         Call<BoredAPIEvent> call = apiService.getActivityParticipants(participants);
 
         call.enqueue(new Callback<BoredAPIEvent>() {
             @Override
             public void onResponse(Call<BoredAPIEvent> call, Response<BoredAPIEvent> response) {
-                Log.d(TAG, response.body().getActivity());
-                BoredAPIEvent boredAPIEvent = response.body();
-                boredAPIEvents.add(boredAPIEvent);
-                // listener.done()
+                boredAPIEvents.add(response.body());
+                listener.onComplete(key, getBoredAPIEvents());
             }
 
             @Override
             public void onFailure(Call<BoredAPIEvent> call, Throwable t) {
-                Log.e(TAG + "getEventParticipants", "Something went wrong fetching data " + t);
+                Log.e(TAG + " getEventParticipants", "Something went wrong fetching data " + t);
             }
         });
     }
 
-    public List<BoredAPIEvent> getBoredAPIEvents() {
-        return boredAPIEvents; //TODO: check for potential memory exposure
+    public static List<PlanadayEvent> getBoredAPIEvents() {
+        List<PlanadayEvent> planadayEvents = new ArrayList<>();
+        for (int i = 0; i < boredAPIEvents.size(); i++) {
+            BoredAPIEvent current = boredAPIEvents.get(i);
+            PlanadayEvent temp = new PlanadayEvent();
+
+            // Convert the BoredAPIEvent into a PlanadayEvent
+            temp.setEventName(current.getActivity());
+            temp.setDuration(1);
+            if (current.getParticipants() > 1) {
+                temp.setSetting("group");
+            } else {
+                temp.setSetting("individual");
+            }
+            if (current.getAccessibility() > 0.5) {
+                temp.setEnvironment("outdoor");
+            } else {
+                temp.setSetting("indoor");
+            }
+            temp.setTypes(new String[]{current.getType()});
+            temp.setLocation("Nearby");
+
+            planadayEvents.add(temp);
+        }
+        return planadayEvents;
     }
 }

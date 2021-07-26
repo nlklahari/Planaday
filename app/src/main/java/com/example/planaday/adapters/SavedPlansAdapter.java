@@ -13,12 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.planaday.R;
 import com.example.planaday.fragments.SavedPlansFragment;
 import com.example.planaday.models.Plan;
+import com.example.planaday.models.PlanadayEvent;
+import com.parse.ParseQuery;
 
 import java.util.List;
 
 public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.ViewHolder> {
     private Context context;
     private List<Plan> savedPlans;
+    private Plan recentlyDeletedItem;
+    private int recentlyDeletePosition;
 
     public SavedPlansAdapter(Context context, List<Plan> savedPlans) {
         this.context = context;
@@ -42,6 +46,16 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
     public int getItemCount() {
         return savedPlans.size();
     }
+
+    public void deleteItem(int position) {
+        recentlyDeletedItem = savedPlans.get(position);
+        recentlyDeletePosition = position;
+        savedPlans.remove(position);
+        notifyItemRemoved(position);
+        // TODO: Delete the deleted item from the database
+        // showUndoSnackbar();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvPlanName;

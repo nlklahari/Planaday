@@ -29,6 +29,7 @@ import com.example.planaday.models.Plan;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.parse.SaveCallback;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -39,6 +40,7 @@ import java.text.SimpleDateFormat;
  */
 public class CreatePlanFragment extends Fragment {
 
+    private static final String TAG = CreatePlanFragment.class.getSimpleName();
     private EditText etPlanName;
     private TextView tvDateField;
     private TextView tvSelectedDate;
@@ -122,9 +124,21 @@ public class CreatePlanFragment extends Fragment {
                     }
 
                     // replace with input from user
-                    GeneratePlan gp = new GeneratePlan("group");
-
-                    launchPlanDetailsActivity();
+                    Plan plan = new Plan();
+                    plan.setPlanName(etPlanName.getText().toString());
+                    GeneratePlan gp = new GeneratePlan(plan,"group");
+                    plan.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(com.parse.ParseException e) {
+                            if (e != null) {
+                                Log.e(TAG, "Error while saving", e);
+                            } else {
+                                Log.i(TAG, "Plan save was successful");
+                                // should plan detials be called from in here?
+                            }
+                        }
+                    });
+                    launchPlanDetailsActivity(plan);
                 }
                 // TODO-----------------------------
                 // Algorithm to retrieve correct plan
@@ -213,9 +227,7 @@ public class CreatePlanFragment extends Fragment {
         return true;
     }
 
-    private void launchPlanDetailsActivity() {
-        Plan plan = new Plan();
-        plan.setPlanName(etPlanName.getText().toString());
+    private void launchPlanDetailsActivity(Plan plan) {
         Intent intent = new Intent(getActivity(), PlanDetailsActivity.class);
         intent.putExtra("plan", plan);
         getContext().startActivity(intent);
