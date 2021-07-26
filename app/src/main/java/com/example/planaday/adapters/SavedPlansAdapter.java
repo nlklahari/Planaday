@@ -14,6 +14,7 @@ import com.example.planaday.R;
 import com.example.planaday.fragments.SavedPlansFragment;
 import com.example.planaday.models.Plan;
 import com.example.planaday.models.PlanadayEvent;
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.ParseQuery;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
     private Plan recentlyDeletedItem;
     private int recentlyDeletePosition;
 
+    private View view;
+
     public SavedPlansAdapter(Context context, List<Plan> savedPlans) {
         this.context = context;
         this.savedPlans = savedPlans;
@@ -32,7 +35,7 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_plan, parent, false);
+        view = LayoutInflater.from(context).inflate(R.layout.item_plan, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,7 +56,20 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
         savedPlans.remove(position);
         notifyItemRemoved(position);
         // TODO: Delete the deleted item from the database
-        // showUndoSnackbar();
+        showUndoSnackbar();
+    }
+
+    private void showUndoSnackbar() {
+        Snackbar snackbar = Snackbar.make(view, "Undo",
+                Snackbar.LENGTH_LONG);
+        snackbar.setAction("Undo", v -> undoDelete());
+        snackbar.show();
+    }
+
+    private void undoDelete() {
+        savedPlans.add(recentlyDeletePosition,
+                recentlyDeletedItem);
+        notifyItemInserted(recentlyDeletePosition);
     }
 
 
