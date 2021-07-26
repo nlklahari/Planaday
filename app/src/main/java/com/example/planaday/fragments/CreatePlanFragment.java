@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -15,18 +16,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.planaday.GeneratePlan;
 import com.example.planaday.R;
 import com.example.planaday.activities.PlanDetailsActivity;
 import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.fragments.widgets.TimePickerFragment;
 import com.example.planaday.models.Plan;
-import com.example.planaday.networking.APIClients;
-import com.example.planaday.networking.BoredAPIRequests;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -44,24 +45,17 @@ public class CreatePlanFragment extends Fragment {
     public TextView tvSelectedStartTime;
     public TextView tvEndTimeField;
     public TextView tvSelectedEndTime;
-    private Switch switchEnvironment;
-    BottomNavigationView navBar;
 
     private TextView tvAdvancedPreferences;
     private Button btnFinish;
     private Button btnCancel;
 
-
+    private TabLayout tabLayout;
+    private BottomAppBar navBar;
+    private FloatingActionButton fabCreatePlan;
 
     public CreatePlanFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -75,8 +69,13 @@ public class CreatePlanFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navBar = getActivity().findViewById(R.id.bottom_navigation);
-        navBar.setVisibility(View.INVISIBLE);
+        tabLayout = getActivity().findViewById(R.id.tabLayout);
+        navBar = getActivity().findViewById(R.id.bottomAppBar);
+        fabCreatePlan =  getActivity().findViewById(R.id.fabCreatePlan);
+
+        tabLayout.setVisibility(View.GONE);
+        navBar.setVisibility(View.GONE);
+        fabCreatePlan.setVisibility(View.GONE);
 
         etPlanName = view.findViewById(R.id.etPlanName);
         tvDateField = view.findViewById(R.id.tvDateField);
@@ -85,13 +84,11 @@ public class CreatePlanFragment extends Fragment {
         tvSelectedStartTime = view.findViewById(R.id.tvSelectedStartTime);
         tvEndTimeField = view.findViewById(R.id.tvEndTimeField);
         tvSelectedEndTime = view.findViewById(R.id.tvSelectedEndTime);
-        switchEnvironment = view.findViewById(R.id.switchEnvironment);
 
         tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
         btnFinish = view.findViewById(R.id.btnFinish);
         btnCancel = view.findViewById(R.id.btnCancel);
 
-        APIClients client = new APIClients();
         fieldsSetOnClickListener();
 
         // TODO: Verify all user inputs are valid (i.e start time < end time)
@@ -123,10 +120,9 @@ public class CreatePlanFragment extends Fragment {
                         e.printStackTrace();
                     }
 
+                    // replace with input from user
+                    GeneratePlan gp = new GeneratePlan("group");
 
-                    Log.i("duration", ""+difference);
-
-                    BoredAPIRequests.getEventParticipants(1); // remove
                     launchPlanDetailsActivity();
                 }
                 // TODO-----------------------------
@@ -158,7 +154,9 @@ public class CreatePlanFragment extends Fragment {
      */
     private void handleOnExitFragment() {
         getParentFragmentManager().beginTransaction().remove(CreatePlanFragment.this).commit();
+        tabLayout.setVisibility(View.VISIBLE);
         navBar.setVisibility(View.VISIBLE);
+        fabCreatePlan.setVisibility(View.VISIBLE);
     }
 
     /**

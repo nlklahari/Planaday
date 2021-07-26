@@ -6,21 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SavedPlansFragment">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabCreatePlan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="50dp"
-        android:clickable="true"
-        android:contentDescription="Create Plan"
-        android:tooltipText="Create a new plan"
-        app:backgroundTint="@color/blush"
-        app:elevation="5dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSavedPlans"
         android:layout_width="match_parent"

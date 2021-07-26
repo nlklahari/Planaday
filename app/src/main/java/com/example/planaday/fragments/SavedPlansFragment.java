@@ -21,11 +21,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.planaday.R;
-import com.example.planaday.activities.MainActivity;
 import com.example.planaday.adapters.SavedPlansAdapter;
 import com.example.planaday.models.Plan;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -35,8 +33,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +57,6 @@ public class SavedPlansFragment extends Fragment {
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
 
-    FloatingActionButton fabCreatePlan;
-
     public SavedPlansFragment() {
         // Required empty public constructor
     }
@@ -86,21 +80,6 @@ public class SavedPlansFragment extends Fragment {
         final FragmentManager fragmentManager = getChildFragmentManager();
 
         rvSavedPlans = view.findViewById(R.id.rvSavedPlans);
-        fabCreatePlan = view.findViewById(R.id.fabCreatePlan);
-
-        // Floating Action Button to create a new plan
-        fabCreatePlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fetchLocation();
-                Fragment fragment = new CreatePlanFragment();
-                final FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.flContainer_SavedPlans, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-
         savedPlans = new ArrayList<>();
         adapter = new SavedPlansAdapter(getContext(), savedPlans);
 

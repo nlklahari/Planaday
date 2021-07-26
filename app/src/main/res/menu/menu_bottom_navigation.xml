@@ -3,16 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_saved_plans"
-        android:title="Saved Plans"
+        android:id="@+id/action_calendar"
+        android:title="Calendar"
         app:showAsAction="always"
-        android:icon="@drawable/ic_baseline_bookmark_24"
-        android:iconTint="@color/blush" />
-
-    <item
-        android:id="@+id/action_explore"
-        android:title="Explore Page"
-        android:icon="@drawable/ic_baseline_search_24"
-        app:showAsAction="always"
-        android:iconTint="@color/blush"/>
+        android:icon="@drawable/ic_round_calendar_today_24" />
 </menu>

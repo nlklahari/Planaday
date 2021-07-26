@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreatePlanFragment">
+    tools:context=".fragments.CreatePlanFragment" >
 
     <Button
         android:id="@+id/btnFinish"
@@ -74,27 +75,7 @@
         android:text="End Time"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/tvEnvironmentFieldIndoor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="316dp"
-        android:text="Indoor"
-        android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/tvEnvironmentFieldOutdoor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="267dp"
-        android:layout_marginTop="320dp"
-        android:text="Outdoor"
-        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvIndividualOption"
@@ -132,19 +113,6 @@
         android:textSize="16sp" />
 
     <Switch
-        android:id="@+id/switchEnvironment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="178dp"
-        android:layout_marginTop="313dp"
-        android:textOff="Outdoor"
-        android:textOn="Indoor"
-        android:textSize="20sp" />
-
-    <Switch
         android:id="@+id/switchSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,7 +123,8 @@
         android:layout_marginTop="365dp"
         android:textOff="Outdoor"
         android:textOn="Indoor"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <EditText
         android:id="@+id/etPlanName"
@@ -165,35 +134,7 @@
         android:layout_marginStart="43dp"
         android:layout_marginTop="60dp"
         android:layout_toEndOf="@+id/tvNameLabel"
-        android:hint="Name your plan">
-
-    </EditText><![CDATA[
-
-
-
-    android:textSize="16sp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ]]>
+        android:hint="Name your plan"/>
 
     <EditText
         android:id="@+id/etMaxPrice"

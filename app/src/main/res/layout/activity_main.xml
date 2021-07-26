@@ -1,21 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
-        android:id="@+id/flContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed"
+                android:id="@+id/tabLayout"
+                app:tabTextAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:tabInlineLabel="true"
+                app:tabRippleColor="@color/blush" >
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_saved_plans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Saved Plans"
+                    android:icon="@drawable/ic_baseline_bookmark_24" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tab_explore_events"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Explore Events"
+                    android:icon="@drawable/ic_baseline_search_24" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <FrameLayout
+                android:id="@+id/flContainer"
+                android:layout_below="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+
+        <!--the usual bottom navigation bar with items-->
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+            app:fabAlignmentMode="end"
+            app:fabCradleMargin="5dp"
+            app:fabCradleRoundedCornerRadius="15dp"
+            app:fabCradleVerticalOffset="10dp"
+            app:navigationIcon="@drawable/ic_baseline_menu_24"
+            app:menu="@menu/menu_bottom_navigation" />
+
+        <!--the normal Floating action button which is
+            anchored to the bottom navigation button-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCreatePlan"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/menu_bottom_navigation"/>
+        android:backgroundTint="@color/peach_puff"
+        app:layout_anchor="@id/bottomAppBar"
+        app:rippleColor="@color/blush"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
-</RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>

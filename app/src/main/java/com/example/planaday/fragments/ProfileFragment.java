@@ -16,6 +16,10 @@ import android.widget.TextView;
 
 import com.example.planaday.R;
 import com.example.planaday.activities.LoginActivity;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +31,9 @@ public class ProfileFragment extends Fragment {
 
     private TextView tvName;
     private TextView tvLogOut;
+    private TabLayout tabLayout;
+    private BottomAppBar navBar;
+    private FloatingActionButton fabCreatePlan;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -35,8 +42,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -46,6 +53,14 @@ public class ProfileFragment extends Fragment {
 
         tvName = view.findViewById(R.id.tvName);
         tvLogOut = view.findViewById(R.id.tvLogOut);
+
+        tabLayout = getActivity().findViewById(R.id.tabLayout);
+        navBar = getActivity().findViewById(R.id.bottomAppBar);
+        fabCreatePlan = getActivity().findViewById(R.id.fabCreatePlan);
+
+        tabLayout.setVisibility(View.GONE);
+        navBar.setVisibility(View.GONE);
+        fabCreatePlan.setVisibility(View.INVISIBLE);
 
         tvName.setText(ParseUser.getCurrentUser().get("name").toString());
         tvLogOut.setOnClickListener(new View.OnClickListener() {
@@ -60,8 +75,10 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+    public void onDestroy() {
+        super.onDestroy();
+        tabLayout.setVisibility(View.VISIBLE);
+        navBar.setVisibility(View.VISIBLE);
+        fabCreatePlan.setVisibility(View.VISIBLE);
     }
 }
