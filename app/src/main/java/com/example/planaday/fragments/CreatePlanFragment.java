@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.planaday.GeneratePlan;
 import com.example.planaday.R;
+import com.example.planaday.activities.MainActivity;
 import com.example.planaday.activities.PlanDetailsActivity;
 import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.fragments.widgets.TimePickerFragment;
