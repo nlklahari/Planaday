@@ -51,8 +51,8 @@ public class PlanadayEvent extends ParseObject {
         put(KEY_NAME, name);
     }
 
-    public String getDuration() {
-        return getString(KEY_DURATION);
+    public int getDuration() {
+        return getInt(KEY_DURATION);
     }
 
     public void setDuration(int duration) {

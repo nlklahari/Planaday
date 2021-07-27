@@ -1,21 +1,24 @@
 package com.example.planaday.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planaday.R;
-import com.example.planaday.fragments.SavedPlansFragment;
+import com.example.planaday.activities.PlanDetailsActivity;
 import com.example.planaday.models.Plan;
-import com.example.planaday.models.PlanadayEvent;
 import com.google.android.material.snackbar.Snackbar;
-import com.parse.ParseQuery;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -50,15 +53,26 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
         return savedPlans.size();
     }
 
+    /**
+     * Deletes the Plan from the list at the given position
+     * @param position
+     */
     public void deleteItem(int position) {
         recentlyDeletedItem = savedPlans.get(position);
         recentlyDeletePosition = position;
         savedPlans.remove(position);
         notifyItemRemoved(position);
-        // TODO: Delete the deleted item from the database
-        showUndoSnackbar();
+        recentlyDeletedItem.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                showUndoSnackbar();
+            }
+        });
     }
 
+    /**
+     * Snackbar to undo most recent deletion of a Plan object
+     */
     private void showUndoSnackbar() {
         Snackbar snackbar = Snackbar.make(view, "Undo",
                 Snackbar.LENGTH_LONG);
@@ -66,13 +80,24 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
         snackbar.show();
     }
 
+    /**
+     * Undoes the most recent deletion of a Plan object
+     */
     private void undoDelete() {
         savedPlans.add(recentlyDeletePosition,
                 recentlyDeletedItem);
+        recentlyDeletedItem.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Toast.makeText(context, "Plan restored", Toast.LENGTH_SHORT).show();
+            }
+        });
         notifyItemInserted(recentlyDeletePosition);
     }
 
-
+    /**
+     *
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvPlanName;
         private TextView tvPlanTime;
@@ -92,11 +117,18 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(context, PlanDetailsActivity.class);
+                    intent.putExtra("plan", savedPlans.get(getAbsoluteAdapterPosition()));
+                    context.startActivity(intent);
                     // TODO: go to plan details activity
                 }
             });
         }
 
+        /**
+         *
+         * @param plan
+         */
         public void bind(Plan plan) {
             Log.i("SavedPlansAdapter", "Binding entered");
             tvPlanName.setText(plan.getPlanName());

@@ -58,7 +58,8 @@ public class BoredAPIRequests {
             } else {
                 temp.setSetting("indoor");
             }
-            temp.setTypes(new String[]{current.getType()});
+            String[] types = {current.getType()};
+            // temp.setTypes(types);
             temp.setLocation("Nearby");
 
             planadayEvents.add(temp);

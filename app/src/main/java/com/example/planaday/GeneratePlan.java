@@ -1,8 +1,11 @@
 package com.example.planaday;
 
+import android.util.Log;
+
 import com.example.planaday.models.Plan;
 import com.example.planaday.models.PlanadayEvent;
 import com.example.planaday.networking.APIRequestResponseListener;
+import com.example.planaday.networking.APIRequestsCompleteListener;
 import com.example.planaday.networking.BoredAPIRequests;
 
 import java.util.ArrayList;
@@ -14,12 +17,13 @@ public class GeneratePlan implements APIRequestResponseListener {
     private List<PlanadayEvent> validEvents;
     Map<String, Boolean> apiCallComplete;
     private Plan plan;
+    private APIRequestsCompleteListener listener;
 
-    public GeneratePlan(Plan plan, String setting) {
+    public GeneratePlan(APIRequestsCompleteListener listener, String setting) {
         validEvents = new ArrayList<>();
         apiCallComplete = new HashMap<>();
-        this.plan = plan;
-
+        this.plan = new Plan();
+        this.listener = listener;
         if (setting.equals("group")) {
             groupEvents();
         }
@@ -43,9 +47,12 @@ public class GeneratePlan implements APIRequestResponseListener {
             for (int i = 0; i < validEvents.size(); i++) {
                 // parse through events list and create a plan
                 if (plan.getDuration() < totalDuration) {
+                    Log.i("GeneratePlan", "Adding events");
                     plan.addEvent(validEvents.get(i));
                 }
+                totalDuration += validEvents.get(i).getDuration();
             }
+            listener.onComplete();
         }
     }
 

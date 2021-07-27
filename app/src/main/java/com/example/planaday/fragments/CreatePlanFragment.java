@@ -1,6 +1,7 @@
 package com.example.planaday.fragments;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -26,11 +27,16 @@ import com.example.planaday.activities.PlanDetailsActivity;
 import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.fragments.widgets.TimePickerFragment;
 import com.example.planaday.models.Plan;
+import com.example.planaday.networking.APIRequestsCompleteListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+
+import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,9 +44,12 @@ import java.text.SimpleDateFormat;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CreatePlanFragment extends Fragment {
+public class CreatePlanFragment extends Fragment implements APIRequestsCompleteListener {
 
     private static final String TAG = CreatePlanFragment.class.getSimpleName();
+    private GeneratePlan planGenerator;
+    private Plan plan;
+
     private EditText etPlanName;
     private TextView tvDateField;
     private TextView tvSelectedDate;
@@ -109,40 +118,8 @@ public class CreatePlanFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (verifyRequiredFieldsInput()) {
-//                    int startHour = Integer.parseInt(tvSelectedStartTime.getText().toString().substring(0,2));
-//                    int startMinute = Integer.parseInt(tvSelectedStartTime.getText().toString().substring(2));
-//                    int endHour = Integer.parseInt(tvSelectedEndTime.getText().toString().substring(0,2));
-//                    int endMinute = Integer.parseInt(tvSelectedEndTime.getText().toString().substring(2));
-
-                    // Fix code to get time difference
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                    long difference = 0;
-                    try {
-                        Time time = new Time((format.parse(tvSelectedStartTime.toString())).getTime());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    // replace with input from user
-                    Plan plan = new Plan();
-                    plan.setPlanName(etPlanName.getText().toString());
-                    GeneratePlan gp = new GeneratePlan(plan,"group");
-                    plan.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(com.parse.ParseException e) {
-                            if (e != null) {
-                                Log.e(TAG, "Error while saving", e);
-                            } else {
-                                Log.i(TAG, "Plan save was successful");
-                                // should plan detials be called from in here?
-                            }
-                        }
-                    });
-                    launchPlanDetailsActivity(plan);
+                    planGenerator = new GeneratePlan( CreatePlanFragment.this,"group");
                 }
-                // TODO-----------------------------
-                // Algorithm to retrieve correct plan
-                // Upload that plan to Parse
             }
         });
 
@@ -234,4 +211,26 @@ public class CreatePlanFragment extends Fragment {
         getActivity().finish();
     }
 
+    @Override
+    public void onComplete() {
+        plan = planGenerator.getPlan();
+        String name = etPlanName.getText().toString();
+        plan.setPlanName(name);
+        plan.setUser(ParseUser.getCurrentUser());
+        plan.setDuration(5);
+        plan.setPlanDate(new Date(2021,3,4));
+
+        plan.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(com.parse.ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving", e);
+                } else {
+                    Log.i(TAG, "Plan save was successful");
+                    // should plan detials be called from in here?
+                }
+            }
+        });
+        launchPlanDetailsActivity(plan);
+    }
 }

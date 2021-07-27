@@ -96,7 +96,7 @@ public class SavedPlansFragment extends Fragment {
         ParseQuery<Plan> query = ParseQuery.getQuery(Plan.class);
         query.include(Plan.KEY_USER);
         query.setLimit(20);
-        query.addDescendingOrder("date");
+        query.addDescendingOrder("date"); // TODO: fix order of results
         query.findInBackground(new FindCallback<Plan>() {
             @Override
             public void done(List<Plan> plans, ParseException e) {
@@ -114,6 +114,9 @@ public class SavedPlansFragment extends Fragment {
         });
     }
 
+    /**
+     *
+     */
     private void setUpRecyclerView() {
         rvSavedPlans.setAdapter(adapter);
         rvSavedPlans.setLayoutManager(new LinearLayoutManager(getContext()));

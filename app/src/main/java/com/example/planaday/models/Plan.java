@@ -7,13 +7,14 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @ParseClassName("Plan")
 public class Plan extends ParseObject {
 
-    public static final String KEY_USER = "user"; // public to filter query results
+    public static final String KEY_USER = "author"; // public to filter query results
     private static final String KEY_NAME = "name";
     private static final String KEY_DATE = "date";
     private static final String KEY_DURATION = "duration";
@@ -26,7 +27,9 @@ public class Plan extends ParseObject {
     private List<PlanadayEvent> events;
 
 
-    public Plan() {}
+    public Plan() {
+        events = new ArrayList<>();
+    }
 
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
