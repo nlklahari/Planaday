@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,8 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     private GeneratePlan planGenerator;
     private Plan plan;
 
+    private RelativeLayout rlMainContent;
+
     private EditText etPlanName;
     private TextView tvDateField;
     private TextView tvSelectedDate;
@@ -61,6 +65,8 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     private TextView tvAdvancedPreferences;
     private Button btnFinish;
     private Button btnCancel;
+
+    private ProgressBar progressBar;
 
     private TabLayout tabLayout;
     private BottomAppBar navBar;
@@ -83,11 +89,15 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
 
         tabLayout = getActivity().findViewById(R.id.tabLayout);
         navBar = getActivity().findViewById(R.id.bottomAppBar);
-        fabCreatePlan =  getActivity().findViewById(R.id.fabCreatePlan);
+        fabCreatePlan = getActivity().findViewById(R.id.fabCreatePlan);
 
         tabLayout.setVisibility(View.GONE);
-        navBar.setVisibility(View.GONE);
-        fabCreatePlan.setVisibility(View.GONE);
+        // navBar.setVisibility(View.GONE);
+        navBar.performHide();
+        fabCreatePlan.hide();
+        //fabCreatePlan.setVisibility(View.GONE);
+
+        rlMainContent = view.findViewById(R.id.rlMainContent);
 
         etPlanName = view.findViewById(R.id.etPlanName);
         tvDateField = view.findViewById(R.id.tvDateField);
@@ -100,6 +110,8 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
         btnFinish = view.findViewById(R.id.btnFinish);
         btnCancel = view.findViewById(R.id.btnCancel);
+
+        progressBar = view.findViewById(R.id.pbLoading);
 
         fieldsSetOnClickListener();
 
@@ -118,37 +130,40 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
             @Override
             public void onClick(View v) {
                 if (verifyRequiredFieldsInput()) {
+                    rlMainContent.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(ProgressBar.VISIBLE);
                     planGenerator = new GeneratePlan( CreatePlanFragment.this,"group");
                 }
             }
         });
 
+
+
         // Cancel Button - Returns to MainActivity
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleOnExitFragment();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
-
-        // Back button press
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                handleOnExitFragment();
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     /**
      * Handle back button and cancel button actions
      */
     private void handleOnExitFragment() {
-        getParentFragmentManager().beginTransaction().remove(CreatePlanFragment.this).commit();
+        // getParentFragmentManager().beginTransaction().remove(CreatePlanFragment.this).commit();
         tabLayout.setVisibility(View.VISIBLE);
-        navBar.setVisibility(View.VISIBLE);
-        fabCreatePlan.setVisibility(View.VISIBLE);
+        navBar.performShow();
+        // navBar.setVisibility(View.VISIBLE);
+        fabCreatePlan.show();
+        //fabCreatePlan.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handleOnExitFragment();
     }
 
     /**
@@ -170,6 +185,7 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
             @Override
             public void onClick(View v) {
                 TimePickerFragment newFragment = new TimePickerFragment(tvSelectedStartTime);
+                newFragment.getTime();
                 newFragment.show(getChildFragmentManager(), "startTimePicker");
                 // TODO: check if start time is after current time and end time > start time
             }
@@ -185,6 +201,11 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         });
     }
 
+    private void parseTime() {
+        String startTime = tvSelectedStartTime.getText().toString();
+
+    }
+
     /**
      * Verifies that user inputs are valid
      */
@@ -196,14 +217,18 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
      * Verifies that user input for all required fields is entered
      */
     private boolean verifyRequiredFieldsInput() {
-        if (etPlanName.getText().toString().isEmpty() || tvSelectedDate.getText().toString().isEmpty()
-        || tvSelectedStartTime.getText().toString().isEmpty() || tvSelectedEndTime.getText().toString().isEmpty()) {
+        if (etPlanName.getText().toString().isEmpty() /** || tvSelectedDate.getText().toString().isEmpty()
+        || tvSelectedStartTime.getText().toString().isEmpty() || tvSelectedEndTime.getText().toString().isEmpty() **/) {
             Toast.makeText(getContext(), "Missing input, please check and try again.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
+    /**
+     *
+     * @param plan
+     */
     private void launchPlanDetailsActivity(Plan plan) {
         Intent intent = new Intent(getActivity(), PlanDetailsActivity.class);
         intent.putExtra("plan", plan);
@@ -213,7 +238,9 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
 
     @Override
     public void onComplete() {
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
         plan = planGenerator.getPlan();
+
         String name = etPlanName.getText().toString();
         plan.setPlanName(name);
         plan.setUser(ParseUser.getCurrentUser());

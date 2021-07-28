@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.planaday.R;
@@ -29,9 +31,11 @@ import com.example.planaday.models.Plan;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +60,24 @@ public class SavedPlansFragment extends Fragment {
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
 
+    private FloatingActionButton fabCreatePlan;
+
     public SavedPlansFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -76,9 +96,11 @@ public class SavedPlansFragment extends Fragment {
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
 
+        fabCreatePlan = getActivity().findViewById(R.id.fabCreatePlan);
+
         rvSavedPlans = view.findViewById(R.id.rvSavedPlans);
         savedPlans = new ArrayList<>();
-        adapter = new SavedPlansAdapter(getContext(), savedPlans);
+        adapter = new SavedPlansAdapter(getContext(), getActivity(), savedPlans);
 
         rvSavedPlans.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -95,6 +117,7 @@ public class SavedPlansFragment extends Fragment {
         Log.i(TAG, "Querying posts");
         ParseQuery<Plan> query = ParseQuery.getQuery(Plan.class);
         query.include(Plan.KEY_USER);
+        query.whereEqualTo(Plan.KEY_USER, ParseUser.getCurrentUser());
         query.setLimit(20);
         query.addDescendingOrder("date"); // TODO: fix order of results
         query.findInBackground(new FindCallback<Plan>() {
@@ -118,8 +141,8 @@ public class SavedPlansFragment extends Fragment {
      *
      */
     private void setUpRecyclerView() {
-        rvSavedPlans.setAdapter(adapter);
-        rvSavedPlans.setLayoutManager(new LinearLayoutManager(getContext()));
+//        rvSavedPlans.setAdapter(adapter);
+//        rvSavedPlans.setLayoutManager(new LinearLayoutManager(getContext()));
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new SwipeToDeleteCallback(adapter));
         itemTouchHelper.attachToRecyclerView(rvSavedPlans);

@@ -1,6 +1,7 @@
 package com.example.planaday.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.planaday.R;
+import com.example.planaday.adapters.PlanDetailsAdapter;
 import com.example.planaday.models.Plan;
 
 public class PlanDetailsActivity extends AppCompatActivity {
@@ -19,6 +21,7 @@ public class PlanDetailsActivity extends AppCompatActivity {
     private TextView tvPlanDuration;
 
     private RecyclerView rvEvents;
+    private PlanDetailsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,10 @@ public class PlanDetailsActivity extends AppCompatActivity {
         // plan time
         tvPlanPrice.setText("$" + plan.getPrice());
         tvPlanDuration.setText(plan.getDuration() + "hrs");
+
+        rvEvents.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvEvents.setLayoutManager(layoutManager);
     }
 
     @Override

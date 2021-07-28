@@ -12,7 +12,7 @@ import com.example.planaday.fragments.CreatePlanFragment;
 import com.example.planaday.fragments.ExploreFragment;
 import com.example.planaday.fragments.ProfileFragment;
 import com.example.planaday.fragments.SavedPlansFragment;
-import com.example.planaday.fragments.widgets.CalendarFragment;
+import com.example.planaday.fragments.CalendarFragment;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void launchFragment(Fragment fragment) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
+//        Fade fade = new Fade();
+//        fade.setStartDelay(10);
+//        fade.setDuration(300);
+//        fragment.setEnterTransition(fade);
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }

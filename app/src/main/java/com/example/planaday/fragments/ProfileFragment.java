@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
 
         tabLayout.setVisibility(View.GONE);
         navBar.setVisibility(View.GONE);
-        fabCreatePlan.setVisibility(View.INVISIBLE);
+        fabCreatePlan.setVisibility(View.GONE);
 
         tvName.setText(ParseUser.getCurrentUser().get("name").toString());
         tvLogOut.setOnClickListener(new View.OnClickListener() {

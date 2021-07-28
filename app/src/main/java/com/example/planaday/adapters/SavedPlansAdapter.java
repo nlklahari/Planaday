@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planaday.R;
@@ -24,14 +26,16 @@ import java.util.List;
 
 public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.ViewHolder> {
     private Context context;
+    private FragmentActivity parentActivity;
     private List<Plan> savedPlans;
     private Plan recentlyDeletedItem;
     private int recentlyDeletePosition;
 
     private View view;
 
-    public SavedPlansAdapter(Context context, List<Plan> savedPlans) {
+    public SavedPlansAdapter(Context context, FragmentActivity parentActivity, List<Plan> savedPlans) {
         this.context = context;
+        this.parentActivity = parentActivity;
         this.savedPlans = savedPlans;
     }
 
@@ -74,7 +78,7 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
      * Snackbar to undo most recent deletion of a Plan object
      */
     private void showUndoSnackbar() {
-        Snackbar snackbar = Snackbar.make(view, "Undo",
+        Snackbar snackbar = Snackbar.make(parentActivity.findViewById(android.R.id.content), "Undo",
                 Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", v -> undoDelete());
         snackbar.show();
@@ -120,7 +124,6 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
                     Intent intent = new Intent(context, PlanDetailsActivity.class);
                     intent.putExtra("plan", savedPlans.get(getAbsoluteAdapterPosition()));
                     context.startActivity(intent);
-                    // TODO: go to plan details activity
                 }
             });
         }

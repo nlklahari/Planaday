@@ -16,7 +16,7 @@ public class Plan extends ParseObject {
 
     public static final String KEY_USER = "author"; // public to filter query results
     private static final String KEY_NAME = "name";
-    private static final String KEY_DATE = "date";
+    public static final String KEY_DATE = "date";
     private static final String KEY_DURATION = "duration";
     private static final String KEY_TIME = "time";
     private static final String KEY_PRICE = "price";

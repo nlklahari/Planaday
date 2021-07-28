@@ -8,7 +8,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
@@ -37,11 +38,24 @@
 
             <FrameLayout
                 android:id="@+id/flContainer"
-                android:layout_below="@+id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tabLayout" />
         </RelativeLayout>
+
+
+        <!--the normal Floating action button which is
+    anchored to the bottom navigation button-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCreatePlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blush"
+            android:overScrollMode="always"
+            app:layout_anchor="@id/bottomAppBar"
+            android:foregroundGravity="top"
+            app:rippleColor="@color/peach_puff"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
         <!--the usual bottom navigation bar with items-->
         <com.google.android.material.bottomappbar.BottomAppBar
@@ -49,23 +63,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            app:hideOnScroll="true"
             style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
             app:fabAlignmentMode="end"
-            app:fabCradleMargin="5dp"
-            app:fabCradleRoundedCornerRadius="15dp"
-            app:fabCradleVerticalOffset="10dp"
             app:navigationIcon="@drawable/ic_baseline_menu_24"
             app:menu="@menu/menu_bottom_navigation" />
 
-        <!--the normal Floating action button which is
-            anchored to the bottom navigation button-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabCreatePlan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/peach_puff"
-        app:layout_anchor="@id/bottomAppBar"
-        app:rippleColor="@color/blush"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

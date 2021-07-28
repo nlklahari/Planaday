@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.widgets.CalendarFragment">
+    tools:context=".fragments.CalendarFragment">
 
     <CalendarView
         android:id="@+id/calendar"
@@ -19,5 +19,13 @@
 
 
     </CalendarView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTodayPlans"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/calendar"
+        android:layout_alignParentBottom="true"
+        android:paddingVertical="15dp" />
 
 </RelativeLayout>

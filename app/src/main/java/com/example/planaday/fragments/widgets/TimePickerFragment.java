@@ -14,9 +14,11 @@ import com.example.planaday.R;
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     private TextView field;
+    private int[] time;
 
     public TimePickerFragment(TextView field) {
         this.field = field;
+        time = new int[2];
     }
 
     @Override
@@ -41,7 +43,13 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         if (minute < 10) {
             stringTime += 0;
         }
+        time[0] = hourOfDay;
+        time[1] = minute;
         stringTime += String.valueOf(minute);
         field.setText(stringTime);
+    }
+
+    public int[] getTime() {
+        return time;
     }
 }
