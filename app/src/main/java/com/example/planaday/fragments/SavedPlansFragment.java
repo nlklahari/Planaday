@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.planaday.R;
@@ -116,8 +115,8 @@ public class SavedPlansFragment extends Fragment {
     private void queryPlans() {
         Log.i(TAG, "Querying posts");
         ParseQuery<Plan> query = ParseQuery.getQuery(Plan.class);
-        query.include(Plan.KEY_USER);
-        query.whereEqualTo(Plan.KEY_USER, ParseUser.getCurrentUser());
+        query.include(Plan.KEY_AUTHOR);
+        query.whereEqualTo(Plan.KEY_AUTHOR, ParseUser.getCurrentUser());
         query.setLimit(20);
         query.addDescendingOrder("date"); // TODO: fix order of results
         query.findInBackground(new FindCallback<Plan>() {
@@ -128,9 +127,6 @@ public class SavedPlansFragment extends Fragment {
                     return;
                 }
 
-                for (Plan p: plans) {
-                    Log.d(TAG, p.getPlanName());
-                }
                 savedPlans.addAll(plans);
                 adapter.notifyDataSetChanged();
             }

@@ -1,5 +1,10 @@
 package com.example.planaday.models;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -7,36 +12,28 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @ParseClassName("Plan")
 public class Plan extends ParseObject {
 
-    public static final String KEY_USER = "author"; // public to filter query results
+    public static final String KEY_AUTHOR = "author"; // public to filter query results
     private static final String KEY_NAME = "name";
     public static final String KEY_DATE = "date";
     private static final String KEY_DURATION = "duration";
     private static final String KEY_TIME = "time";
     private static final String KEY_PRICE = "price";
     private static final String KEY_EVENTS = "events";
-    private static final String KEY_ENVIRONMENT = "environment"; //indoor or outdoor
-    private static final String KEY_SETTING = "setting"; //individual or group
 
-    private List<PlanadayEvent> events;
-
-
-    public Plan() {
-        events = new ArrayList<>();
-    }
+    public Plan() {}
 
     public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+        return getParseUser(KEY_AUTHOR);
     }
 
     public void setUser(ParseUser parseUser) {
-        put(KEY_USER, parseUser);
+        put(KEY_AUTHOR, parseUser);
     }
 
     public String getPlanName() {
@@ -76,7 +73,7 @@ public class Plan extends ParseObject {
         return getDouble(KEY_PRICE);
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         put(KEY_PRICE, price);
     }
 
@@ -85,28 +82,16 @@ public class Plan extends ParseObject {
         return PlanadayEvent.fromJSONArray(results, getUser());
     }
 
-    public void addEvent(PlanadayEvent event) {
-        events.add(event);
-    }
-
     public void setEvents(List<PlanadayEvent> events) {
-        put(KEY_EVENTS, events);
-    }
-
-    public String getEnvironment() {
-        return getString(KEY_ENVIRONMENT);
-    }
-
-    public void setEnvironment(String environment) {
-        put(KEY_ENVIRONMENT, environment);
-    }
-
-    public String getSetting() {
-        return getString(KEY_SETTING);
-    }
-
-    public void setSetting(String setting) {
-        put(KEY_SETTING, setting);
+        Log.i("Plan", "Putting events");
+        Gson gson = new Gson();
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < events.size(); i++) {
+            String jsonEvent = gson.toJson(events.get(i));
+            Log.i("Plan", jsonEvent);
+            jsonArray.put(jsonEvent);
+        }
+        put(KEY_EVENTS, jsonArray);
     }
 
 }

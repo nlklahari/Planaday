@@ -50,16 +50,16 @@ public class BoredAPIRequests {
             temp.setDuration(1);
             if (current.getParticipants() > 1) {
                 temp.setSetting("group");
-            } else {
+            } else if (current.getParticipants() <= 1) {
                 temp.setSetting("individual");
             }
             if (current.getAccessibility() > 0.5) {
                 temp.setEnvironment("outdoor");
             } else {
-                temp.setSetting("indoor");
+                temp.setEnvironment("indoor");
             }
             String[] types = {current.getType()};
-            // temp.setTypes(types);
+            // temp.setTypes(types); // TODO: types type incorrect
             temp.setLocation("Nearby");
 
             planadayEvents.add(temp);

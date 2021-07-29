@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -16,9 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,7 @@ import com.example.planaday.models.Plan;
 import com.example.planaday.networking.APIRequestsCompleteListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -62,6 +66,9 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     public TextView tvEndTimeField;
     public TextView tvSelectedEndTime;
 
+    private Switch switchSetting;
+    private String settingSelected;
+
     private TextView tvAdvancedPreferences;
     private Button btnFinish;
     private Button btnCancel;
@@ -71,6 +78,7 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     private TabLayout tabLayout;
     private BottomAppBar navBar;
     private FloatingActionButton fabCreatePlan;
+
 
     public CreatePlanFragment() {
         // Required empty public constructor
@@ -86,78 +94,19 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        tabLayout = getActivity().findViewById(R.id.tabLayout);
-        navBar = getActivity().findViewById(R.id.bottomAppBar);
-        fabCreatePlan = getActivity().findViewById(R.id.fabCreatePlan);
-
-        tabLayout.setVisibility(View.GONE);
-        // navBar.setVisibility(View.GONE);
-        navBar.performHide();
-        fabCreatePlan.hide();
-        //fabCreatePlan.setVisibility(View.GONE);
-
-        rlMainContent = view.findViewById(R.id.rlMainContent);
-
-        etPlanName = view.findViewById(R.id.etPlanName);
-        tvDateField = view.findViewById(R.id.tvDateField);
-        tvSelectedDate = view.findViewById(R.id.tvSelectedDate);
-        tvStartTimeField = view.findViewById(R.id.tvStartTimeField);
-        tvSelectedStartTime = view.findViewById(R.id.tvSelectedStartTime);
-        tvEndTimeField = view.findViewById(R.id.tvEndTimeField);
-        tvSelectedEndTime = view.findViewById(R.id.tvSelectedEndTime);
-
-        tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
-        btnFinish = view.findViewById(R.id.btnFinish);
-        btnCancel = view.findViewById(R.id.btnCancel);
-
-        progressBar = view.findViewById(R.id.pbLoading);
-
+        setupFieldsByID(view);
         fieldsSetOnClickListener();
-
-        // TODO: Verify all user inputs are valid (i.e start time < end time)
-
-        // Advanced Preferences
-        tvAdvancedPreferences.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        // Finish Button
-        btnFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (verifyRequiredFieldsInput()) {
-                    rlMainContent.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(ProgressBar.VISIBLE);
-                    planGenerator = new GeneratePlan( CreatePlanFragment.this,"group");
-                }
-            }
-        });
-
-
-
-        // Cancel Button - Returns to MainActivity
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack();
-            }
-        });
+        buttonSetOnClickListeners();
+        verifyValidUserInput();
     }
 
     /**
      * Handle back button and cancel button actions
      */
     private void handleOnExitFragment() {
-        // getParentFragmentManager().beginTransaction().remove(CreatePlanFragment.this).commit();
         tabLayout.setVisibility(View.VISIBLE);
         navBar.performShow();
-        // navBar.setVisibility(View.VISIBLE);
         fabCreatePlan.show();
-        //fabCreatePlan.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -199,8 +148,44 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                 newFragment.show(getChildFragmentManager(), "endTimePicker");
             }
         });
+
+        // Advanced Preferences
+        tvAdvancedPreferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
+    /**
+     * Sets the onClick listeners for all buttons in the Create Plan Screen
+     */
+    private void buttonSetOnClickListeners() {
+        // Finish Button - Launches new plan details activity screen
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (verifyRequiredFieldsInput()) {
+                    rlMainContent.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(ProgressBar.VISIBLE);
+                    planGenerator = new GeneratePlan( CreatePlanFragment.this,settingSelected);
+                }
+            }
+        });
+
+        // Cancel Button - Returns to main activity screen
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+    }
+
+    /**
+     *
+     */
     private void parseTime() {
         String startTime = tvSelectedStartTime.getText().toString();
 
@@ -210,7 +195,7 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
      * Verifies that user inputs are valid
      */
     private void verifyValidUserInput() {
-
+        // TODO
     }
 
     /**
@@ -226,7 +211,7 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     }
 
     /**
-     *
+     * Launches new activity with generated plan and its details
      * @param plan
      */
     private void launchPlanDetailsActivity(Plan plan) {
@@ -236,6 +221,9 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         getActivity().finish();
     }
 
+    /**
+     * Listener's callback to get and save generated plan
+     */
     @Override
     public void onComplete() {
         progressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -254,10 +242,72 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                     Log.e(TAG, "Error while saving", e);
                 } else {
                     Log.i(TAG, "Plan save was successful");
-                    // should plan detials be called from in here?
+                    // should plan details be called from in here?
                 }
             }
         });
         launchPlanDetailsActivity(plan);
     }
+
+    /**
+     * Finds and sets all screen components on this screen
+     * @param view
+     */
+    private void setupFieldsByID(View view) {
+        tabLayout = getActivity().findViewById(R.id.tabLayout);
+        navBar = getActivity().findViewById(R.id.bottomAppBar);
+        fabCreatePlan = getActivity().findViewById(R.id.fabCreatePlan);
+
+        // Hide tab layout, bottom app bar, and floating action button
+        tabLayout.setVisibility(View.GONE);
+        navBar.performHide();
+        fabCreatePlan.hide();
+
+        rlMainContent = view.findViewById(R.id.rlMainContent);
+
+        etPlanName = view.findViewById(R.id.etPlanName);
+
+        // Date Picker
+        tvDateField = view.findViewById(R.id.tvDateField);
+        tvSelectedDate = view.findViewById(R.id.tvSelectedDate);
+
+        // Start Time Picker
+        tvStartTimeField = view.findViewById(R.id.tvStartTimeField);
+        tvSelectedStartTime = view.findViewById(R.id.tvSelectedStartTime);
+
+        // End Time Picker
+        tvEndTimeField = view.findViewById(R.id.tvEndTimeField);
+        tvSelectedEndTime = view.findViewById(R.id.tvSelectedEndTime);
+
+        // Switches
+        settingSwitchResult(view);
+
+        tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
+        btnFinish = view.findViewById(R.id.btnFinish);
+        btnCancel = view.findViewById(R.id.btnCancel);
+
+        progressBar = view.findViewById(R.id.pbLoading);
+    }
+
+    /**
+     * Finds and gets the result from the Setting Switch
+     * @param view
+     */
+    private void settingSwitchResult(View view) {
+        switchSetting = view.findViewById(R.id.switchSetting);
+        settingSelected = switchSetting.getTextOff().toString();
+        switchSetting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    settingSelected = switchSetting.getTextOn().toString();
+                } else {
+                    settingSelected = switchSetting.getTextOff().toString();
+                }
+            }
+        });
+        Log.i(TAG, settingSelected);
+    }
+
+
 }

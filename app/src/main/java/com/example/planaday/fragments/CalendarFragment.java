@@ -2,7 +2,6 @@ package com.example.planaday.fragments;
 
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -26,12 +25,13 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CalendarFragment extends Fragment implements CalendarView.OnDateChangeListener {
+public class CalendarFragment extends Fragment {
 
     private static final String TAG = CalendarFragment.class.getSimpleName();
 
@@ -68,15 +68,27 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDateCha
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvTodayPlans.setLayoutManager(layoutManager);
 
-        queryPlans();
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                queryPlans();
+            }
+        });
     }
 
     private void queryPlans() {
         Log.i(TAG, "Querying posts");
         ParseQuery<Plan> query = ParseQuery.getQuery(Plan.class);
-        query.include(Plan.KEY_USER);
-        query.whereEqualTo(Plan.KEY_USER, ParseUser.getCurrentUser());
-        query.whereEqualTo(Plan.KEY_DATE, calendar.getDate());
+        query.include(Plan.KEY_AUTHOR);
+        query.whereEqualTo(Plan.KEY_AUTHOR, ParseUser.getCurrentUser());
+        Calendar calendarStandard = Calendar.getInstance();
+        calendarStandard.setTimeInMillis(calendar.getDate());
+        Date date = calendarStandard.getTime();
+
+
+
+        query.whereEqualTo(Plan.KEY_DATE, date);
+        Log.d(TAG, "date " + date);
         query.setLimit(20);
         query.addDescendingOrder("date"); // TODO: fix order of results
         query.findInBackground(new FindCallback<Plan>() {
@@ -100,9 +112,4 @@ public class CalendarFragment extends Fragment implements CalendarView.OnDateCha
         });
     }
 
-    @Override
-    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-        Log.i(TAG, "Date selection changed on calendar");
-        queryPlans();
-    }
 }

@@ -1,11 +1,16 @@
 package com.example.planaday.models;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +31,28 @@ public class PlanadayEvent extends ParseObject {
 
     public static List<PlanadayEvent> fromJSONArray(JSONArray results, ParseUser user) throws JSONException {
         List<PlanadayEvent> events = new ArrayList<>();
+        if (results == null) {
+            return events;
+        }
         for (int i = 0; i < results.length(); i++) {
-            PlanadayEvent newEvent = new PlanadayEvent();
-            newEvent.setUser(user);
-            newEvent.setDuration(results.getInt(i));
-            // TODO
+            String jsonString = results.getString(i);
+            JSONObject jsonObject1 = new JSONObject(jsonString);
+            // JSONObject jsonObject1 = results.getJSONObject(i);
+            JSONObject jsonObject = jsonObject1.getJSONObject("estimatedData");
+            Log.i("PlanadayEvent", jsonObject.toString());
+            PlanadayEvent fromJsonToPlanadayEvent = new PlanadayEvent();
+            fromJsonToPlanadayEvent.setUser(user);
+            fromJsonToPlanadayEvent.setEventName(jsonObject.getString("name"));
+            fromJsonToPlanadayEvent.setDuration(jsonObject.getInt("duration"));
+            String[] types = {"educational"};
+            // fromJsonToPlanadayEvent.setTypes(types); // TODO: Set types dynamically
+            fromJsonToPlanadayEvent.setLocation(jsonObject.getString("location"));
+            // environment
+            // setting
+            // price
+
+            // Add
+            events.add(fromJsonToPlanadayEvent);
         }
         return events;
     }

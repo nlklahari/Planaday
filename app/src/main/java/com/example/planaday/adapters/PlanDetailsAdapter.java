@@ -1,6 +1,7 @@
 package com.example.planaday.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.ViewHolder> {
 
+    private static final String TAG = PlanDetailsAdapter.class.getSimpleName();
     private Context context;
     private List<PlanadayEvent> events;
 
@@ -28,6 +30,7 @@ public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_event, parent, false);
+        Log.i(TAG, "onCreateViewHolder for PlanDetailsAdapter");
         return new ViewHolder(view);
     }
 
@@ -53,6 +56,7 @@ public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.
         }
 
         public void bind(PlanadayEvent event) {
+            Log.i(TAG, "binding");
             tvEventName.setText(event.getEventName());
         }
     }

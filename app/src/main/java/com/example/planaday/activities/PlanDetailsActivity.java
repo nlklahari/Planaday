@@ -6,14 +6,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.planaday.R;
 import com.example.planaday.adapters.PlanDetailsAdapter;
 import com.example.planaday.models.Plan;
+import com.example.planaday.models.PlanadayEvent;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlanDetailsActivity extends AppCompatActivity {
 
+    private static final String TAG = "PlanDetailsActivity";
     private TextView tvPlanName;
     private TextView tvPlanDate;
     private TextView tvPlanTime;
@@ -22,6 +30,8 @@ public class PlanDetailsActivity extends AppCompatActivity {
 
     private RecyclerView rvEvents;
     private PlanDetailsAdapter adapter;
+
+    private List<PlanadayEvent> selectedEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +54,19 @@ public class PlanDetailsActivity extends AppCompatActivity {
         tvPlanPrice.setText("$" + plan.getPrice());
         tvPlanDuration.setText(plan.getDuration() + "hrs");
 
+        selectedEvents = new ArrayList<>();
+
+        try {
+            selectedEvents.addAll(plan.getEvents());
+        } catch (JSONException e) {
+            Log.e(TAG, "Error getting selected events for plan " + e);
+        }
+
+        adapter = new PlanDetailsAdapter(this, selectedEvents);
         rvEvents.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvEvents.setLayoutManager(layoutManager);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
