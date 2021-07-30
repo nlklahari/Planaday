@@ -1,4 +1,4 @@
-package com.example.planaday.networking;
+package com.example.planaday.networking.listeners;
 
 import com.example.planaday.models.PlanadayEvent;
 

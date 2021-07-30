@@ -1,9 +1,11 @@
-package com.example.planaday.networking;
+package com.example.planaday.networking.boredAPI;
 
 import android.util.Log;
 
 import com.example.planaday.models.BoredAPIEvent;
 import com.example.planaday.models.PlanadayEvent;
+import com.example.planaday.networking.APIClients;
+import com.example.planaday.networking.listeners.APIRequestResponseListener;
 
 import java.util.ArrayList;
 import java.util.List;

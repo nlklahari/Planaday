@@ -1,4 +1,4 @@
-package com.example.planaday.networking;
+package com.example.planaday.networking.boredAPI;
 
 import com.example.planaday.models.BoredAPIEvent;
 

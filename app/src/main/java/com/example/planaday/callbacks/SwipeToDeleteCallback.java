@@ -1,4 +1,4 @@
-package com.example.planaday;
+package com.example.planaday.callbacks;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;

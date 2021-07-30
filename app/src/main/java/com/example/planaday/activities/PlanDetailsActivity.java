@@ -49,10 +49,10 @@ public class PlanDetailsActivity extends AppCompatActivity {
         Plan plan = getIntent().getExtras().getParcelable("plan");
 
         tvPlanName.setText(plan.getPlanName());
-        // plan date
+        tvPlanDate.setText(plan.getPlanDateString());
         // plan time
-        tvPlanPrice.setText("$" + plan.getPrice());
-        tvPlanDuration.setText(plan.getDuration() + "hrs");
+        tvPlanPrice.setText("$ " + plan.getPrice());
+        tvPlanDuration.setText(plan.getDuration() + " hrs");
 
         selectedEvents = new ArrayList<>();
 

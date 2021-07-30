@@ -19,4 +19,10 @@
         <item name="colorAccent">@color/violet_crayola</item>
         <item name="colorOnPrimary">@color/violet_crayola</item>
     </style>
+
+    <style name="CalenderViewCustom" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/peach_puff</item>
+        <item name="android:background">@color/light_salmon</item>
+    </style>
+
 </resources>

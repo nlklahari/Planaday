@@ -3,8 +3,6 @@ package com.example.planaday.models;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -23,8 +21,9 @@ public class Plan extends ParseObject {
     public static final String KEY_DATE = "date";
     private static final String KEY_DURATION = "duration";
     private static final String KEY_TIME = "time";
-    private static final String KEY_PRICE = "price";
-    private static final String KEY_EVENTS = "events";
+    public static final String KEY_PRICE = "price";
+    public static final String KEY_EVENTS = "events";
+    public static final String KEY_DATE_STRING = "dateString";
 
     public Plan() {}
 
@@ -92,6 +91,14 @@ public class Plan extends ParseObject {
             jsonArray.put(jsonEvent);
         }
         put(KEY_EVENTS, jsonArray);
+    }
+
+    public String getPlanDateString() {
+        return getString(KEY_DATE_STRING);
+    }
+
+    public void setPlanDateString(String dateString) {
+        put(KEY_DATE_STRING, dateString);
     }
 
 }

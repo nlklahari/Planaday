@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.planaday.R;
-import com.example.planaday.SwipeToDeleteCallback;
+import com.example.planaday.callbacks.SwipeToDeleteCallback;
 import com.example.planaday.adapters.SavedPlansAdapter;
 import com.example.planaday.models.Plan;
 import com.google.android.gms.location.FusedLocationProviderClient;

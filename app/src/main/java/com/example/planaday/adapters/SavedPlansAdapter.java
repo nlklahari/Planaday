@@ -136,9 +136,9 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
             Log.i("SavedPlansAdapter", "Binding entered");
             tvPlanName.setText(plan.getPlanName());
             tvPlanTime.setText(plan.getStringTime());
-            tvPlanPrice.setText("$" + plan.getPrice());
+            tvPlanPrice.setText("$ " + plan.getPrice());
             tvPlanDuration.setText(plan.getDuration() + " hrs");
-            tvPlanDate.setText(plan.getPlanDate().toString());
+            tvPlanDate.setText(plan.getPlanDateString());
         }
     }
 }

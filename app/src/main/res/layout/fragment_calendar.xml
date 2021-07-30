@@ -9,15 +9,12 @@
         android:id="@+id/calendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="25dp"
-        android:background="@color/blush">
-
-
-
+        android:layout_marginTop="25dp"
+        android:theme="@style/CalenderViewCustom">
     </CalendarView>
 
     <androidx.recyclerview.widget.RecyclerView

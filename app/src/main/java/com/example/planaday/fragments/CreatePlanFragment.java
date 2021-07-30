@@ -1,14 +1,10 @@
 package com.example.planaday.fragments;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -25,27 +21,21 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.planaday.GeneratePlan;
+import com.example.planaday.plan_generation.GeneratePlan;
 import com.example.planaday.R;
-import com.example.planaday.activities.MainActivity;
 import com.example.planaday.activities.PlanDetailsActivity;
 import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.fragments.widgets.TimePickerFragment;
 import com.example.planaday.models.Plan;
-import com.example.planaday.networking.APIRequestsCompleteListener;
+import com.example.planaday.networking.listeners.APIRequestsCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import org.json.JSONException;
-
 import java.sql.Date;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,6 +69,7 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     private BottomAppBar navBar;
     private FloatingActionButton fabCreatePlan;
 
+    private long dateMs;
 
     public CreatePlanFragment() {
         // Required empty public constructor
@@ -123,9 +114,13 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         tvDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerFragment newFragment = new DatePickerFragment(tvSelectedDate);
+                DatePickerFragment newFragment = new DatePickerFragment(new OnSuccessListener<DatePickerFragment>() {
+                    @Override
+                    public void onSuccess(DatePickerFragment datePickerFragment) {
+                        datePickerFragment.setTVField(tvSelectedDate);
+                    }
+                });
                 newFragment.show(getChildFragmentManager(), "datePicker");
-                // TODO: check if date is after today
             }
         });
 
@@ -169,7 +164,11 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                 if (verifyRequiredFieldsInput()) {
                     rlMainContent.setVisibility(View.INVISIBLE);
                     progressBar.setVisibility(ProgressBar.VISIBLE);
-                    planGenerator = new GeneratePlan( CreatePlanFragment.this,settingSelected);
+
+                    // TODO: Put everything into variables and pass it in
+                    planGenerator = new GeneratePlan( CreatePlanFragment.this,
+                            etPlanName.getText().toString(), tvSelectedDate.getText().toString(),
+                            tvSelectedStartTime.getText().toString(), tvSelectedEndTime.getText().toString(), settingSelected);
                 }
             }
         });
@@ -230,9 +229,7 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         plan = planGenerator.getPlan();
 
         String name = etPlanName.getText().toString();
-        plan.setPlanName(name);
         plan.setUser(ParseUser.getCurrentUser());
-        plan.setDuration(5);
         plan.setPlanDate(new Date(2021,3,4));
 
         plan.saveInBackground(new SaveCallback() {
@@ -308,6 +305,4 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         });
         Log.i(TAG, settingSelected);
     }
-
-
 }

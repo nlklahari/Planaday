@@ -17,12 +17,14 @@ import android.widget.Toast;
 
 import com.example.planaday.R;
 import com.example.planaday.adapters.CalendarPlansAdapter;
+import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.models.Plan;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,38 +59,36 @@ public class CalendarFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         calendar = view.findViewById(R.id.calendar);
-
         rvTodayPlans = view.findViewById(R.id.rvTodayPlans);
         todayPlans = new ArrayList<>();
         adapter = new CalendarPlansAdapter(getContext(), getActivity(), todayPlans);
-
-        Log.d(TAG, "entered onViewCreated");
 
         rvTodayPlans.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvTodayPlans.setLayoutManager(layoutManager);
 
+//        Calendar cal = Calendar.getInstance();
+//        queryPlans(cal.getTime().getYear(), cal.getTime().getMonth(), cal.getTime().getDate());
+
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                queryPlans();
+                todayPlans.clear();
+                adapter.notifyDataSetChanged();
+                queryPlans(year, month, dayOfMonth);
             }
         });
     }
 
-    private void queryPlans() {
+    private void queryPlans(int year, int month, int dayOfMonth) {
         Log.i(TAG, "Querying posts");
         ParseQuery<Plan> query = ParseQuery.getQuery(Plan.class);
         query.include(Plan.KEY_AUTHOR);
         query.whereEqualTo(Plan.KEY_AUTHOR, ParseUser.getCurrentUser());
-        Calendar calendarStandard = Calendar.getInstance();
-        calendarStandard.setTimeInMillis(calendar.getDate());
-        Date date = calendarStandard.getTime();
 
+        String selectedDateString = month + "/" + dayOfMonth + "/" + year;
 
-
-        query.whereEqualTo(Plan.KEY_DATE, date);
-        Log.d(TAG, "date " + date);
+        query.whereEqualTo(Plan.KEY_DATE_STRING, selectedDateString);
         query.setLimit(20);
         query.addDescendingOrder("date"); // TODO: fix order of results
         query.findInBackground(new FindCallback<Plan>() {
@@ -98,13 +98,9 @@ public class CalendarFragment extends Fragment {
                     Log.e(TAG, "issue with getting plans");
                     return;
                 }
-
                 if (plans.isEmpty()) {
+                    Log.d(TAG, "showing empty plans");
                     Toast.makeText(getContext(), "No plans for today", Toast.LENGTH_SHORT).show();
-                }
-
-                for (Plan p: plans) {
-                    Log.d(TAG, p.getPlanName());
                 }
                 todayPlans.addAll(plans);
                 adapter.notifyDataSetChanged();

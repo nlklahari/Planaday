@@ -1,12 +1,12 @@
-package com.example.planaday;
+package com.example.planaday.plan_generation;
 
 import android.util.Log;
 
 import com.example.planaday.models.Plan;
 import com.example.planaday.models.PlanadayEvent;
-import com.example.planaday.networking.APIRequestResponseListener;
-import com.example.planaday.networking.APIRequestsCompleteListener;
-import com.example.planaday.networking.BoredAPIRequests;
+import com.example.planaday.networking.listeners.APIRequestResponseListener;
+import com.example.planaday.networking.listeners.APIRequestsCompleteListener;
+import com.example.planaday.networking.boredAPI.BoredAPIRequests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,11 +40,18 @@ public class GeneratePlan implements APIRequestResponseListener {
      * @param listener to identify when all api calls are completed
      * @param setting of the plan (i.e individual or group)
      */
-    public GeneratePlan(APIRequestsCompleteListener listener, String setting) {
+    public GeneratePlan(APIRequestsCompleteListener listener,
+                        String planName, String planDate,
+                        String planStartTime, String planEndTime,  String setting) {
+
         validEvents = new ArrayList<>();
         apiCallComplete = new HashMap<>();
         this.plan = new Plan();
         this.listener = listener;
+
+        plan.setPlanName(planName);
+        plan.setDuration(5);
+        plan.setPlanDateString(planDate);
 
         if (setting.equals("group")) {
             Log.i(TAG, "Group events selected");
@@ -53,7 +60,6 @@ public class GeneratePlan implements APIRequestResponseListener {
             Log.i(TAG, "Individual events selected");
             individualEvents();
         }
-
     }
 
     /**
