@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.androidanimations.library.fading_exits.FadeOutLeftAnimator;
 import com.example.planaday.R;
 import com.example.planaday.activities.PlanDetailsActivity;
 import com.example.planaday.models.Plan;

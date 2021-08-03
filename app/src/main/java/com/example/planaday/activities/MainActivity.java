@@ -1,11 +1,17 @@
 package com.example.planaday.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.animation.Animator;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.widget.RelativeLayout;
 
 import com.example.planaday.R;
 import com.example.planaday.fragments.CreatePlanFragment;
@@ -65,7 +71,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Create plan Floating Action Button
-        fab.setOnClickListener(v -> launchFragment(new CreatePlanFragment()));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchFragment(new CreatePlanFragment());
+            }
+        });
 
         // Bottom App Bar - navigation
         bottomAppBar.setNavigationOnClickListener(v -> launchFragment(new ProfileFragment()));
@@ -77,12 +88,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+    /**
+     * Replaces frame layot container with given Fragment
+     * @param fragment
+     */
     private void launchFragment(Fragment fragment) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
-//        Fade fade = new Fade();
-//        fade.setStartDelay(10);
-//        fade.setDuration(300);
-//        fragment.setEnterTransition(fade);
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.flContainer, fragment).addToBackStack(null).commit();
     }

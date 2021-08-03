@@ -12,15 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.planaday.plan_generation.GeneratePlan;
 import com.example.planaday.R;
 import com.example.planaday.activities.PlanDetailsActivity;
@@ -31,11 +32,19 @@ import com.example.planaday.networking.listeners.APIRequestsCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.tabs.TabLayout;
+//import com.hootsuite.nachos.NachoTextView;
+import com.hootsuite.nachos.NachoTextView;
+import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static com.hootsuite.nachos.terminator.ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,17 +68,18 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     private Switch switchSetting;
     private String settingSelected;
 
+    private RangeSlider rsDistance;
+    private int selectedDistance;
+
     private TextView tvAdvancedPreferences;
     private Button btnFinish;
     private Button btnCancel;
 
-    private ProgressBar progressBar;
+    private LottieAnimationView animLoading;
 
     private TabLayout tabLayout;
     private BottomAppBar navBar;
     private FloatingActionButton fabCreatePlan;
-
-    private long dateMs;
 
     public CreatePlanFragment() {
         // Required empty public constructor
@@ -163,12 +173,19 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
             public void onClick(View v) {
                 if (verifyRequiredFieldsInput()) {
                     rlMainContent.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(ProgressBar.VISIBLE);
+                    animLoading.setVisibility(View.VISIBLE);
+                    animLoading.playAnimation();
 
+                    List<String> keywords = new ArrayList<>();
+                    keywords.add("education");
+                    keywords.add("kitchen");
+                    keywords.add("sport");
+                    String currentLocation = "47,-117";
                     // TODO: Put everything into variables and pass it in
                     planGenerator = new GeneratePlan( CreatePlanFragment.this,
                             etPlanName.getText().toString(), tvSelectedDate.getText().toString(),
-                            tvSelectedStartTime.getText().toString(), tvSelectedEndTime.getText().toString(), settingSelected);
+                            tvSelectedStartTime.getText().toString(), tvSelectedEndTime.getText().toString(),
+                            selectedDistance, currentLocation, keywords, settingSelected);
                 }
             }
         });
@@ -180,14 +197,6 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });
-    }
-
-    /**
-     *
-     */
-    private void parseTime() {
-        String startTime = tvSelectedStartTime.getText().toString();
-
     }
 
     /**
@@ -225,10 +234,8 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
      */
     @Override
     public void onComplete() {
-        progressBar.setVisibility(ProgressBar.INVISIBLE);
         plan = planGenerator.getPlan();
 
-        String name = etPlanName.getText().toString();
         plan.setUser(ParseUser.getCurrentUser());
         plan.setPlanDate(new Date(2021,3,4));
 
@@ -276,14 +283,26 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         tvEndTimeField = view.findViewById(R.id.tvEndTimeField);
         tvSelectedEndTime = view.findViewById(R.id.tvSelectedEndTime);
 
-        // Switches
+        // Setting Switch
         settingSwitchResult(view);
+        // Distance Range Slider
+        distanceRangeSliderResult(view);
+
+        // TODO: Implement correctly
+        NachoTextView nachoTextView = view.findViewById(R.id.nacho_text_view);
+
+        String[] suggestions = new String[]{"Tortilla Chips", "Melted Cheese", "Salsa", "Guacamole", "Mexico", "Jalapeno"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
+        nachoTextView.addChipTerminator(';', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
+
+        nachoTextView.setAdapter(adapter);
 
         tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
         btnFinish = view.findViewById(R.id.btnFinish);
         btnCancel = view.findViewById(R.id.btnCancel);
 
-        progressBar = view.findViewById(R.id.pbLoading);
+        // Loading animation
+        animLoading = view.findViewById(R.id.animLoading);
     }
 
     /**
@@ -304,5 +323,21 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
             }
         });
         Log.i(TAG, settingSelected);
+    }
+
+    /**
+     * Finds and gets the result from the Range Slider for the distance
+     * @param view
+     */
+    private void distanceRangeSliderResult(View view) {
+        rsDistance = view.findViewById(R.id.rsDistance);
+        selectedDistance = 0;
+        rsDistance.addOnChangeListener(new RangeSlider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
+                selectedDistance = (int) (value);
+                Log.i(TAG, "Distance chosen: " + selectedDistance);
+            }
+        });
     }
 }

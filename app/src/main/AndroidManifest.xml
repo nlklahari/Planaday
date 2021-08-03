@@ -36,7 +36,10 @@
             android:value="@string/back4app_app_id" />
         <meta-data
             android:name="com.parse.CLIENT_KEY"
-            android:value="@string/back4app_client_key" /> <!-- Recommended for Android 9 (API level 28) and lower. -->
+            android:value="@string/back4app_client_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" /> <!-- Recommended for Android 9 (API level 28) and lower. -->
         <!-- Required for Android 10 (API level 29) and higher. -->
         <service
             android:name=".activities.MainActivity"

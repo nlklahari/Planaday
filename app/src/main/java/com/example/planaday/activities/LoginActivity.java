@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.attention.ShakeAnimator;
+import com.daimajia.androidanimations.library.fading_exits.FadeOutLeftAnimator;
 import com.example.planaday.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -80,6 +82,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (e != null) {
                     Toast.makeText(LoginActivity.this, "Invalid Username and/or Password", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "Issue with login", e);
+                    ShakeAnimator animator = new ShakeAnimator();
+                    animator.prepare(etUsername);
+                    animator.prepare(etPassword);
+                    animator.animate();
                     return;
                 }
                 launchMainActivity();

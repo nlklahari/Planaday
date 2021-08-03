@@ -15,6 +15,10 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.attention.PulseAnimator;
+import com.daimajia.androidanimations.library.attention.RubberBandAnimator;
+import com.daimajia.androidanimations.library.fading_exits.FadeOutLeftAnimator;
+import com.daimajia.androidanimations.library.sliders.SlideInUpAnimator;
 import com.example.planaday.R;
 import com.example.planaday.adapters.CalendarPlansAdapter;
 import com.example.planaday.fragments.widgets.DatePickerFragment;
@@ -73,6 +77,9 @@ public class CalendarFragment extends Fragment {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                SlideInUpAnimator animator = new SlideInUpAnimator();
+                animator.prepare(rvTodayPlans);
+                animator.animate();
                 todayPlans.clear();
                 adapter.notifyDataSetChanged();
                 queryPlans(year, month, dayOfMonth);

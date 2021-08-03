@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CreatePlanFragment" >
+    android:layout_marginHorizontal="15dp"
+    tools:context=".fragments.CreatePlanFragment">
 
     <RelativeLayout
         android:id="@+id/rlMainContent"
@@ -19,9 +21,10 @@
             android:layout_alignTop="@id/btnCancel"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="100dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="75dp"
             android:layout_marginBottom="50dp"
+            android:layout_toRightOf="@id/btnCancel"
             android:text="Finish" />
 
         <Button
@@ -55,7 +58,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="61dp"
             android:layout_marginTop="208dp"
-            android:text="Price Range"
+            android:text="Budget"
             android:textSize="16sp" />
 
         <TextView
@@ -64,8 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="262dp"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="254dp"
             android:text="Distance"
             android:textSize="16sp" />
 
@@ -80,8 +83,6 @@
             android:text="End Time"
             android:textSize="16sp" />
 
-
-
         <TextView
             android:id="@+id/tvSettingTextOff"
             android:layout_width="wrap_content"
@@ -90,7 +91,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="75dp"
-            android:layout_marginTop="363dp"
+            android:layout_marginTop="311dp"
             android:text="Individual"
             android:textSize="16sp" />
 
@@ -102,8 +103,60 @@
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="268dp"
-            android:layout_marginTop="366dp"
+            android:layout_marginTop="314dp"
             android:text="Group"
+            android:textSize="16sp" />
+
+        <Switch
+            android:id="@+id/switchSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="178dp"
+            android:layout_marginTop="313dp"
+            android:textOff="individual"
+            android:textOn="group"
+            android:textSize="20sp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:id="@+id/tvEnvironmentTextOff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="73dp"
+            android:layout_marginTop="372dp"
+            android:text="Indoor"
+            android:textSize="16sp" />
+
+        <Switch
+            android:id="@+id/switchEnvironment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="189dp"
+            android:layout_marginTop="371dp"
+            android:textOff="individual"
+            android:textOn="group"
+            android:textSize="20sp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:id="@+id/tvEnvironmentTextOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="277dp"
+            android:layout_marginTop="369dp"
+            android:text="Outdoor"
             android:textSize="16sp" />
 
         <TextView
@@ -117,20 +170,6 @@
             android:text="Date"
             android:textSize="16sp" />
 
-        <Switch
-            android:id="@+id/switchSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="178dp"
-            android:layout_marginTop="365dp"
-            android:textOff="individual"
-            android:textOn="group"
-            android:textSize="20sp"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-
         <EditText
             android:id="@+id/etPlanName"
             android:layout_width="wrap_content"
@@ -139,7 +178,7 @@
             android:layout_marginStart="43dp"
             android:layout_marginTop="60dp"
             android:layout_toEndOf="@+id/tvNameLabel"
-            android:hint="Name your plan"/>
+            android:hint="Name your plan" />
 
         <EditText
             android:id="@+id/etMaxPrice"
@@ -149,21 +188,7 @@
             android:layout_marginStart="73dp"
             android:layout_marginTop="197dp"
             android:layout_toEndOf="@+id/tvNameLabel"
-            android:hint="Max Price">
-
-        </EditText>
-
-        <EditText
-            android:id="@+id/etMaxDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="74dp"
-            android:layout_marginTop="251dp"
-            android:layout_toEndOf="@+id/tvNameLabel"
-            android:hint="Max Distance">
-
-        </EditText>
+            android:hint="Max Price" />
 
         <TextView
             android:id="@+id/tvNameLabel"
@@ -182,8 +207,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="106dp"
-            android:layout_marginBottom="125dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginBottom="116dp"
             android:clickable="true"
             android:text="Advanced Preferences"
             android:textColor="#2196F3"
@@ -206,8 +231,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="172dp"
-            android:layout_marginEnd="220dp"
+            android:layout_marginTop="168dp"
+            android:layout_marginEnd="193dp"
             android:textAlignment="viewStart"
             tools:text="21:30" />
 
@@ -229,39 +254,47 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="168dp"
-            android:layout_marginEnd="72dp"
+            android:layout_marginTop="169dp"
+            android:layout_marginEnd="31dp"
             android:textAlignment="viewStart"
             tools:text="22:30" />
 
-        <CheckBox
-            android:id="@+id/cbFood"
-            android:layout_width="wrap_content"
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/rsDistance"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="120dp"
-            android:layout_marginBottom="240dp"
-            android:text="Food" />
+            android:layout_below="@id/etMaxPrice"
+            android:layout_marginHorizontal="15dp"
+            android:layout_toRightOf="@id/tvDistanceField"
+            android:valueFrom="0"
+            android:valueTo="1000"
+            android:stepSize="10.0"
+            >
 
-        <CheckBox
-            android:id="@+id/cbRecreational"
-            android:layout_width="wrap_content"
+        </com.google.android.material.slider.RangeSlider>
+
+        <com.hootsuite.nachos.NachoTextView
+            android:id="@+id/nacho_text_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="110dp"
-            android:layout_marginBottom="192dp"
-            android:text="Recreational" />
+            android:layout_below="@+id/tvEnvironmentTextOn"
+            android:layout_marginTop="15dp" />
 
     </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/pbLoading"
-        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animLoading"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        app:lottie_rawRes="@raw/loading_loop_animation" />
 
 </RelativeLayout>

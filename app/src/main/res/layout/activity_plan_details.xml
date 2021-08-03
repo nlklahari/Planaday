@@ -9,7 +9,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rlPlanDetailsBlock1">`
+        android:id="@+id/rlPlanDetailsBlock1"
+        android:padding="25dp"
+        android:background="@drawable/profile_options_bg">`
 
         <TextView
             android:id="@+id/tvPlanName"
@@ -17,68 +19,59 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="37dp"
-            android:layout_marginTop="36dp"
             android:textSize="36sp"
             tools:text="Plan #1" />
 
-        <TextView
-            android:id="@+id/tvPlanDate"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="65dp"
-            android:textSize="28sp"
-            tools:text="6/21" />
+            android:id="@+id/planDetailsLLBlock1"
+            android:orientation="vertical"
+            android:layout_below="@+id/tvPlanName">
 
-        <TextView
-            android:id="@+id/tvPlanPrice"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="103dp"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            tools:text="Est. total price: $100" />
+            <TextView
+                android:id="@+id/tvPlanDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:textSize="20dp"
+                tools:text="6/6/21" />
 
-        <TextView
-            android:id="@+id/tvPlanDuration"
+            <TextView
+                android:id="@+id/tvPlanTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="5dp"
+                android:textSize="20dp"
+                tools:text="4:30pm - 9:30pm" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="179dp"
-            android:layout_marginTop="103dp"
-            android:layout_marginEnd="107dp"
-            android:textAlignment="center"
-            android:textSize="18dp"
-            tools:text="Total Duration: 5 hrs" />
+            android:id="@+id/planDetailsLLBlock2"
+            android:orientation="vertical"
+            android:layout_below="@+id/tvPlanName"
+            android:layout_toEndOf="@+id/planDetailsLLBlock1"
+            android:layout_marginStart="15dp">
 
-        <TextView
-            android:id="@+id/tvPlanTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="72dp"
-            android:layout_marginEnd="34dp"
-            android:textSize="16sp"
-            tools:text="4:30pm - 9:30pm" />
+            <TextView
+                android:id="@+id/tvPlanPrice"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                tools:text="Est. total price: $100" />
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="170dp"
-            android:background="?android:attr/listDivider" />
+            <TextView
+                android:id="@+id/tvPlanDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                tools:text="Total Duration: 5 hrs" />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <RelativeLayout

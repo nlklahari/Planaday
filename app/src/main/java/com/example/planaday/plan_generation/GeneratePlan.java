@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.planaday.models.Plan;
 import com.example.planaday.models.PlanadayEvent;
+import com.example.planaday.networking.googlePlacesAPI.GooglePlacesAPIRequests;
 import com.example.planaday.networking.listeners.APIRequestResponseListener;
 import com.example.planaday.networking.listeners.APIRequestsCompleteListener;
 import com.example.planaday.networking.boredAPI.BoredAPIRequests;
@@ -42,7 +43,9 @@ public class GeneratePlan implements APIRequestResponseListener {
      */
     public GeneratePlan(APIRequestsCompleteListener listener,
                         String planName, String planDate,
-                        String planStartTime, String planEndTime,  String setting) {
+                        String planStartTime, String planEndTime,
+                        int maxDistance, String currentLocation, List<String> keywords,
+                        String setting) {
 
         validEvents = new ArrayList<>();
         apiCallComplete = new HashMap<>();
@@ -50,12 +53,13 @@ public class GeneratePlan implements APIRequestResponseListener {
         this.listener = listener;
 
         plan.setPlanName(planName);
-        plan.setDuration(5);
+        plan.setDuration(2);
         plan.setPlanDateString(planDate);
 
         if (setting.equals("group")) {
             Log.i(TAG, "Group events selected");
             groupEvents();
+            locationBasedEvents(maxDistance, currentLocation, keywords);
         } else {
             Log.i(TAG, "Individual events selected");
             individualEvents();
@@ -84,6 +88,14 @@ public class GeneratePlan implements APIRequestResponseListener {
         // TODO: Make call to GoogleAPI
     }
 
+    private void locationBasedEvents(int maxDistance, String currentLocation, List<String> keywords) {
+        for (int i = 0 ; i < keywords.size(); i++) {
+            String key = "locationBasedEvents" + i;
+            apiCallComplete.put(key, false);
+            GooglePlacesAPIRequests.getPlaces(key, keywords.get(i), maxDistance, currentLocation, this);
+        }
+    }
+
     @Override
     public void onComplete(String key, List<PlanadayEvent> planadayEvents) {
         validEvents.addAll(planadayEvents);
@@ -93,7 +105,7 @@ public class GeneratePlan implements APIRequestResponseListener {
             int totalDuration = 0;
             for (int i = 0; i < validEvents.size(); i++) {
                 // parse through events list and create a plan
-                if (plan.getDuration() < totalDuration) {
+                if (plan.getDuration() > totalDuration) {
                     Log.i("GeneratePlan", "Adding events and duration: " + totalDuration);
                     selectedEvents.add(validEvents.get(i));
                 }

@@ -137,8 +137,6 @@ public class SavedPlansFragment extends Fragment {
      *
      */
     private void setUpRecyclerView() {
-//        rvSavedPlans.setAdapter(adapter);
-//        rvSavedPlans.setLayoutManager(new LinearLayoutManager(getContext()));
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new SwipeToDeleteCallback(adapter));
         itemTouchHelper.attachToRecyclerView(rvSavedPlans);
