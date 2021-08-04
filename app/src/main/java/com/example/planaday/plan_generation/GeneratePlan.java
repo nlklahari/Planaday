@@ -36,6 +36,8 @@ public class GeneratePlan implements APIRequestResponseListener {
      */
     private APIRequestsCompleteListener listener;
 
+    private String environment;
+
     /**
      * Generates a new plan with current user preferences
      * @param listener to identify when all api calls are completed
@@ -45,25 +47,26 @@ public class GeneratePlan implements APIRequestResponseListener {
                         String planName, String planDate,
                         String planStartTime, String planEndTime,
                         int maxDistance, String currentLocation, List<String> keywords,
-                        String setting) {
+                        String environment, String setting) {
 
         validEvents = new ArrayList<>();
         apiCallComplete = new HashMap<>();
         this.plan = new Plan();
         this.listener = listener;
+        this.environment = environment;
 
         plan.setPlanName(planName);
-        plan.setDuration(2);
+        plan.setDuration(7);
         plan.setPlanDateString(planDate);
 
         if (setting.equals("group")) {
             Log.i(TAG, "Group events selected");
             groupEvents();
-            locationBasedEvents(maxDistance, currentLocation, keywords);
         } else {
             Log.i(TAG, "Individual events selected");
             individualEvents();
         }
+        locationBasedEvents(maxDistance, currentLocation, keywords);
     }
 
     /**
@@ -85,11 +88,17 @@ public class GeneratePlan implements APIRequestResponseListener {
         String key = "individualEvents";
         apiCallComplete.put(key, false);
         BoredAPIRequests.getEventParticipants(key, 1, this);
-        // TODO: Make call to GoogleAPI
     }
 
+    /**
+     * Get events from Google Places API using location bias
+     * @param maxDistance
+     * @param currentLocation
+     * @param keywords
+     */
     private void locationBasedEvents(int maxDistance, String currentLocation, List<String> keywords) {
         for (int i = 0 ; i < keywords.size(); i++) {
+            Log.d(TAG, "entered location based events method");
             String key = "locationBasedEvents" + i;
             apiCallComplete.put(key, false);
             GooglePlacesAPIRequests.getPlaces(key, keywords.get(i), maxDistance, currentLocation, this);
@@ -98,24 +107,30 @@ public class GeneratePlan implements APIRequestResponseListener {
 
     @Override
     public void onComplete(String key, List<PlanadayEvent> planadayEvents) {
-        validEvents.addAll(planadayEvents);
+        if (planadayEvents != null) {
+            validEvents.addAll(planadayEvents);
+        }
         apiCallComplete.replace(key, true);
         List<PlanadayEvent> selectedEvents = new ArrayList<>();
         if (!apiCallComplete.containsValue(false)) {
             int totalDuration = 0;
             for (int i = 0; i < validEvents.size(); i++) {
                 // parse through events list and create a plan
-                if (plan.getDuration() > totalDuration) {
+                if (plan.getDuration() > totalDuration && validEvents.get(i).getEnvironment().equals(environment)) {
                     Log.i("GeneratePlan", "Adding events and duration: " + totalDuration);
                     selectedEvents.add(validEvents.get(i));
                 }
                 totalDuration += validEvents.get(i).getDuration();
             }
             plan.setEvents(selectedEvents);
-            listener.onComplete();
+            listener.onCompleteAllRequests();
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Plan getPlan() {
         return plan;
     }

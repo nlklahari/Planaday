@@ -1,6 +1,7 @@
 package com.example.planaday.fragments;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.planaday.LocationFetch;
 import com.example.planaday.plan_generation.GeneratePlan;
 import com.example.planaday.R;
 import com.example.planaday.activities.PlanDetailsActivity;
@@ -29,29 +32,32 @@ import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.fragments.widgets.TimePickerFragment;
 import com.example.planaday.models.Plan;
 import com.example.planaday.networking.listeners.APIRequestsCompleteListener;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.tabs.TabLayout;
-//import com.hootsuite.nachos.NachoTextView;
+
 import com.hootsuite.nachos.NachoTextView;
+import com.hootsuite.nachos.chip.Chip;
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
+import com.hootsuite.nachos.validator.ChipifyingNachoValidator;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static com.hootsuite.nachos.terminator.ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CreatePlanFragment extends Fragment implements APIRequestsCompleteListener {
-
     private static final String TAG = CreatePlanFragment.class.getSimpleName();
+
     private GeneratePlan planGenerator;
     private Plan plan;
 
@@ -65,11 +71,17 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     public TextView tvEndTimeField;
     public TextView tvSelectedEndTime;
 
+    private Switch switchEnvironment;
+    private String environmentSelected;
+
     private Switch switchSetting;
     private String settingSelected;
 
     private RangeSlider rsDistance;
     private int selectedDistance;
+
+    private NachoTextView ntvKeywords;
+    private List<String> keywordsSelected;
 
     private TextView tvAdvancedPreferences;
     private Button btnFinish;
@@ -80,6 +92,8 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     private TabLayout tabLayout;
     private BottomAppBar navBar;
     private FloatingActionButton fabCreatePlan;
+
+    private Location lastKnownLocation;
 
     public CreatePlanFragment() {
         // Required empty public constructor
@@ -95,10 +109,16 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        LocationFetch locationFetch = new LocationFetch(getContext(), getActivity());
+        lastKnownLocation = locationFetch.getLocation(savedInstanceState);
+        if (lastKnownLocation != null) {
+            Log.i(TAG, "latitude: " + lastKnownLocation.getLatitude());
+        }
+
         setupFieldsByID(view);
         fieldsSetOnClickListener();
         buttonSetOnClickListeners();
-        verifyValidUserInput();
     }
 
     /**
@@ -171,21 +191,19 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                keywordsSelected = ntvKeywords.getChipValues();
                 if (verifyRequiredFieldsInput()) {
                     rlMainContent.setVisibility(View.INVISIBLE);
                     animLoading.setVisibility(View.VISIBLE);
                     animLoading.playAnimation();
 
-                    List<String> keywords = new ArrayList<>();
-                    keywords.add("education");
-                    keywords.add("kitchen");
-                    keywords.add("sport");
-                    String currentLocation = "47,-117";
-                    // TODO: Put everything into variables and pass it in
+                    String currentLocation = "47,-122";
+
                     planGenerator = new GeneratePlan( CreatePlanFragment.this,
                             etPlanName.getText().toString(), tvSelectedDate.getText().toString(),
                             tvSelectedStartTime.getText().toString(), tvSelectedEndTime.getText().toString(),
-                            selectedDistance, currentLocation, keywords, settingSelected);
+                            selectedDistance*1609, currentLocation, keywordsSelected,
+                            environmentSelected, settingSelected);
                 }
             }
         });
@@ -200,19 +218,12 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     }
 
     /**
-     * Verifies that user inputs are valid
-     */
-    private void verifyValidUserInput() {
-        // TODO
-    }
-
-    /**
      * Verifies that user input for all required fields is entered
      */
     private boolean verifyRequiredFieldsInput() {
         if (etPlanName.getText().toString().isEmpty() /** || tvSelectedDate.getText().toString().isEmpty()
         || tvSelectedStartTime.getText().toString().isEmpty() || tvSelectedEndTime.getText().toString().isEmpty() **/) {
-            Toast.makeText(getContext(), "Missing input, please check and try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Missing input, please check and try again.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -233,12 +244,9 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
      * Listener's callback to get and save generated plan
      */
     @Override
-    public void onComplete() {
+    public void onCompleteAllRequests() {
         plan = planGenerator.getPlan();
-
         plan.setUser(ParseUser.getCurrentUser());
-        plan.setPlanDate(new Date(2021,3,4));
-
         plan.saveInBackground(new SaveCallback() {
             @Override
             public void done(com.parse.ParseException e) {
@@ -246,7 +254,6 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                     Log.e(TAG, "Error while saving", e);
                 } else {
                     Log.i(TAG, "Plan save was successful");
-                    // should plan details be called from in here?
                 }
             }
         });
@@ -285,17 +292,12 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
 
         // Setting Switch
         settingSwitchResult(view);
+        // Environment Switch
+        environmentSwitchResult(view);
         // Distance Range Slider
         distanceRangeSliderResult(view);
-
-        // TODO: Implement correctly
-        NachoTextView nachoTextView = view.findViewById(R.id.nacho_text_view);
-
-        String[] suggestions = new String[]{"Tortilla Chips", "Melted Cheese", "Salsa", "Guacamole", "Mexico", "Jalapeno"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
-        nachoTextView.addChipTerminator(';', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
-
-        nachoTextView.setAdapter(adapter);
+        // Keywords Selection
+        keywordsNTVResult(view);
 
         tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
         btnFinish = view.findViewById(R.id.btnFinish);
@@ -303,6 +305,22 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
 
         // Loading animation
         animLoading = view.findViewById(R.id.animLoading);
+    }
+
+    /**
+     *
+     * @param view
+     */
+    private void keywordsNTVResult(View view) {
+        ntvKeywords = view.findViewById(R.id.ntvKeywords);
+        String[] suggestions = new String[]{"education", "park", "sports", "roller coaster", "hiking", "mountain"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, suggestions);
+        ntvKeywords.addChipTerminator(';', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
+        ntvKeywords.setAdapter(adapter);
+
+        // Set Illegal Characters
+        ntvKeywords.setIllegalCharacters('$', '#', '1', '2', '3', '4', '5', '6', '7', '8', '9', '@', '%', '^', '&', '*');
+        ntvKeywords.setNachoValidator(new ChipifyingNachoValidator());
     }
 
     /**
@@ -322,7 +340,25 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                 }
             }
         });
-        Log.i(TAG, settingSelected);
+    }
+
+    /**
+     * Finds and gets the result from the Setting Switch
+     * @param view
+     */
+    private void environmentSwitchResult(View view) {
+        switchEnvironment = view.findViewById(R.id.switchEnvironment);
+        environmentSelected = switchEnvironment.getTextOff().toString();
+        switchEnvironment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    environmentSelected = switchEnvironment.getTextOn().toString();
+                } else {
+                    environmentSelected = switchEnvironment.getTextOff().toString();
+                }
+            }
+        });
     }
 
     /**
@@ -336,8 +372,9 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
             @Override
             public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
                 selectedDistance = (int) (value);
-                Log.i(TAG, "Distance chosen: " + selectedDistance);
             }
         });
     }
+
+
 }

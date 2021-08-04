@@ -20,6 +20,8 @@ public class BoredAPIRequests {
     private static final BoredAPIInterface apiService = APIClients.getBoredAPIClient().create(BoredAPIInterface.class);
     private static List<BoredAPIEvent> boredAPIEvents = new ArrayList<>();
 
+    private static String[] outdoorKeywords = new String[]{"park", "Park", "mountain", "hiking", "pool", "picnic", "play", "volleyball"};
+
     /**
      *  Get a random activity based on the number of participants
      * @param participants
@@ -31,7 +33,9 @@ public class BoredAPIRequests {
             @Override
             public void onResponse(Call<BoredAPIEvent> call, Response<BoredAPIEvent> response) {
                 boredAPIEvents.add(response.body());
+                Log.d(TAG, "body from request: " + response.body().getActivity());
                 listener.onComplete(key, getBoredAPIEvents());
+                boredAPIEvents.clear();
             }
 
             @Override
@@ -55,10 +59,11 @@ public class BoredAPIRequests {
             } else if (current.getParticipants() <= 1) {
                 temp.setSetting("individual");
             }
-            if (current.getAccessibility() > 0.5) {
-                temp.setEnvironment("outdoor");
-            } else {
-                temp.setEnvironment("indoor");
+            temp.setEnvironment("indoor");
+            for (int j = 0; j < outdoorKeywords.length; j++) {
+                if (temp.getEventName().contains(outdoorKeywords[i]) || current.getAccessibility() > 0.5) {
+                    temp.setEnvironment("outdoor");
+                }
             }
             String[] types = {current.getType()};
             // temp.setTypes(types); // TODO: types type incorrect

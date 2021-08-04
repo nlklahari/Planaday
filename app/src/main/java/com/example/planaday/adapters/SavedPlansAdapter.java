@@ -34,10 +34,14 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
 
     private View view;
 
+    private TextView tvDisplayTextWhenNoSavedPlans;
+
     public SavedPlansAdapter(Context context, FragmentActivity parentActivity, List<Plan> savedPlans) {
         this.context = context;
         this.parentActivity = parentActivity;
         this.savedPlans = savedPlans;
+
+        tvDisplayTextWhenNoSavedPlans = parentActivity.findViewById(R.id.tvDisplayTextWhenNoSavedPlans);
     }
 
     @NonNull
@@ -71,6 +75,9 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
             @Override
             public void done(ParseException e) {
                 showUndoSnackbar();
+                if (savedPlans.isEmpty()) {
+                    tvDisplayTextWhenNoSavedPlans.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -98,6 +105,7 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
             }
         });
         notifyItemInserted(recentlyDeletePosition);
+        tvDisplayTextWhenNoSavedPlans.setVisibility(View.GONE);
     }
 
     /**

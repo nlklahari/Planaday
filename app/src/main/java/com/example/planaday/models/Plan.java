@@ -11,19 +11,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ParseClassName("Plan")
 public class Plan extends ParseObject {
 
     public static final String KEY_AUTHOR = "author"; // public to filter query results
     private static final String KEY_NAME = "name";
-    public static final String KEY_DATE = "date";
     private static final String KEY_DURATION = "duration";
     private static final String KEY_TIME = "time";
     public static final String KEY_PRICE = "price";
     public static final String KEY_EVENTS = "events";
     public static final String KEY_DATE_STRING = "dateString";
+    public static final String KEY_DATE = "date";
 
     public Plan() {}
 
@@ -48,7 +50,7 @@ public class Plan extends ParseObject {
     }
 
     // Modify type to just String?
-    public void setPlanDate(Date date) {
+    public void setPlanDate(Object date) {
         put(KEY_DATE, date);
     }
 
@@ -82,7 +84,7 @@ public class Plan extends ParseObject {
     }
 
     public void setEvents(List<PlanadayEvent> events) {
-        Log.i("Plan", "Putting events");
+        Log.i("Plan", "Putting events, size: " + events.size());
         Gson gson = new Gson();
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < events.size(); i++) {

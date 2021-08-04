@@ -28,9 +28,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public static final String DATE_FORMAT = "MM/dd/yyyy";
 
     private OnSuccessListener<DatePickerFragment> listener;
-
     private String dateString;
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
 
     public DatePickerFragment(OnSuccessListener<DatePickerFragment> listener) {
         this.listener = listener;
@@ -52,7 +50,15 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        dateString = month + "/" + dayOfMonth + "/" + year;
+        dateString = "";
+        if (month < 10) {
+            dateString = "0";
+        }
+        dateString += (month + 1) + "/";
+        if (dayOfMonth < 10) {
+            dateString+= "0";
+        }
+        dateString += dayOfMonth + "/" + year;
         listener.onSuccess(this);
     }
 
@@ -63,16 +69,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void setTVField(TextView field1) {
         Log.i("DatePickerFragment", "setting textview to selected date");
         field1.setText(dateString);
-    }
-
-    /**
-     * Returns a Date object given a string date in the format defined above
-     * @param dateString
-     * @return
-     * @throws ParseException
-     */
-    public Date getDateObject(String dateString) throws ParseException {
-        return simpleDateFormat.parse(dateString);
     }
 
 }

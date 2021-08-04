@@ -26,6 +26,9 @@ public class BoredAPIEvent {
     @SerializedName("accessibility")
     @Expose
     private Double accessibility;
+    @SerializedName("error")
+    @Expose
+    private String error;
 
     public String getActivity() {
         return activity;
@@ -47,4 +50,7 @@ public class BoredAPIEvent {
         return accessibility;
     }
 
+    public String getError() {
+        return error;
+    }
 }

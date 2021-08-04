@@ -6,6 +6,7 @@ import com.example.planaday.models.GooglePlacesAPIEvent;
 import com.example.planaday.models.PlanadayEvent;
 import com.example.planaday.networking.APIClients;
 import com.example.planaday.networking.listeners.APIRequestResponseListener;
+import com.facebook.stetho.common.ArrayListAccumulator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,16 @@ public class GooglePlacesAPIRequests {
     private static final GooglePlacesAPIInterface apiService = APIClients.getGoogleAPIClient().create(GooglePlacesAPIInterface.class);
     private static List<GooglePlacesAPIEvent> googleAPIEvents = new ArrayList<>();
 
+    private static String[] outdoorKeywords = new String[]{"park", "Park", "mountain", "hiking", "pool", "picnic", "play"};
+
+    /**
+     *
+     * @param key
+     * @param input
+     * @param maxDistance
+     * @param currentLocation
+     * @param listener
+     */
     public static void getPlaces(String key, String input, int maxDistance, String currentLocation, APIRequestResponseListener listener) {
         Call<GooglePlacesAPIEvent> call = apiService.getPlaces(input, "textquery",
                 "name,formatted_address,types", "circle:"+maxDistance+"@"+currentLocation,
@@ -29,8 +40,15 @@ public class GooglePlacesAPIRequests {
         call.enqueue(new Callback<GooglePlacesAPIEvent>() {
             @Override
             public void onResponse(Call<GooglePlacesAPIEvent> call, Response<GooglePlacesAPIEvent> response) {
-                googleAPIEvents.add(response.body());
-                listener.onComplete(key, getGoogleAPIEvents());
+                Log.d(TAG, "entered google api requests and got a response");
+
+                if (response.body() != null && !response.body().getStatus().equals("ZERO_RESULTS")) {
+                    googleAPIEvents.add(response.body());
+                    listener.onComplete(key, getGoogleAPIEvents());
+                    googleAPIEvents.clear();
+                } else {
+                    listener.onComplete(key, null);
+                }
             }
 
             @Override
@@ -40,6 +58,10 @@ public class GooglePlacesAPIRequests {
         });
     }
 
+    /**
+     *
+     * @return
+     */
     public static List<PlanadayEvent> getGoogleAPIEvents() {
         List<PlanadayEvent> planadayEvents = new ArrayList<>();
         for (int i = 0; i < googleAPIEvents.size(); i++) {
@@ -48,12 +70,14 @@ public class GooglePlacesAPIRequests {
 
             // Convert the GooglePlacesAPIEvent into a PlanadayEvent
             temp.setEventName(current.getCandidates().get(0).getName());
-            Log.i(TAG, "name of google event: " + temp.getEventName());
             temp.setDuration(1);
             temp.setSetting("group");
-            // TODO: cross reference with keywords associated with outdoors
-            temp.setEnvironment("outdoor");
-            //temp.setEnvironment("indoor");
+            temp.setEnvironment("indoor");
+            for (int j = 0; j < outdoorKeywords.length; j++) {
+                if (temp.getEventName().contains(outdoorKeywords[i])) {
+                    temp.setEnvironment("outdoor");
+                }
+            }
             // String[] types = current.getCandidates().get(0).getTypes();
             // temp.setTypes(types);
             temp.setLocation(current.getCandidates().get(0).getFormattedAddress());
