@@ -22,7 +22,7 @@ public class GooglePlacesAPIRequests {
     private static final GooglePlacesAPIInterface apiService = APIClients.getGoogleAPIClient().create(GooglePlacesAPIInterface.class);
     private static List<GooglePlacesAPIEvent> googleAPIEvents = new ArrayList<>();
 
-    private static String[] outdoorKeywords = new String[]{"park", "Park", "mountain", "hiking", "pool", "picnic", "play"};
+    private static String[] outdoorKeywords = new String[]{"park", "Park", "mountain", "Mountain", "hiking", "pool", "picnic", "play", "Play", "Stargaze"};
 
     /**
      *

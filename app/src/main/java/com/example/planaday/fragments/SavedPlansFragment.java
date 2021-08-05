@@ -17,13 +17,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.daimajia.androidanimations.library.fading_entrances.FadeInUpAnimator;
+import com.daimajia.androidanimations.library.sliders.SlideInUpAnimator;
 import com.example.planaday.R;
 import com.example.planaday.callbacks.SwipeToDeleteCallback;
 import com.example.planaday.adapters.SavedPlansAdapter;
 import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.models.Plan;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -47,6 +51,9 @@ public class SavedPlansFragment extends Fragment {
     private SavedPlansAdapter adapter;
 
     private TextView tvDisplayTextWhenNoSavedPlans;
+
+
+    private ShimmerFrameLayout sflPlanPlaceholder;
 
     private FloatingActionButton fabCreatePlan;
 
@@ -82,11 +89,16 @@ public class SavedPlansFragment extends Fragment {
         fabCreatePlan = getActivity().findViewById(R.id.fabCreatePlan);
 
         rvSavedPlans = view.findViewById(R.id.rvSavedPlans);
+
         savedPlans = new ArrayList<>();
         adapter = new SavedPlansAdapter(getContext(), getActivity(), savedPlans);
 
         tvDisplayTextWhenNoSavedPlans = view.findViewById(R.id.tvDisplayTextWhenNoSavedPlans);
         tvDisplayTextWhenNoSavedPlans.setVisibility(View.GONE);
+
+        sflPlanPlaceholder = view.findViewById(R.id.sflPlanPlaceholder);
+        sflPlanPlaceholder.setVisibility(View.VISIBLE);
+        sflPlanPlaceholder.startShimmer();
 
         rvSavedPlans.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -100,7 +112,7 @@ public class SavedPlansFragment extends Fragment {
      *
      */
     private void queryPlans() {
-        Log.i(TAG, "Querying posts");
+        Log.i(TAG, "Querying plans");
         SimpleDateFormat formatter = new SimpleDateFormat(DatePickerFragment.DATE_FORMAT);
         Date currentDate = Calendar.getInstance().getTime();
         String currentDateString = formatter.format(currentDate);
@@ -113,6 +125,7 @@ public class SavedPlansFragment extends Fragment {
         query.findInBackground(new FindCallback<Plan>() {
             @Override
             public void done(List<Plan> plans, ParseException e) {
+                sflPlanPlaceholder.setVisibility(View.GONE);
                 if (e != null) {
                     Log.e(TAG, "issue with getting plans");
                     return;

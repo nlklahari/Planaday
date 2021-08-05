@@ -1,7 +1,6 @@
 package com.example.planaday.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +14,14 @@ import com.example.planaday.models.PlanadayEvent;
 
 import java.util.List;
 
-public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.ViewHolder> {
+public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHolder> {
 
-    private static final String TAG = PlanDetailsAdapter.class.getSimpleName();
     private Context context;
-    private List<PlanadayEvent> events;
+    private List<PlanadayEvent> suggestedEvents;
 
-    public PlanDetailsAdapter(Context context, List<PlanadayEvent> events) {
+    public ExploreAdapter(Context context, List<PlanadayEvent> suggestedEvents) {
         this.context = context;
-        this.events = events;
+        this.suggestedEvents = suggestedEvents;
     }
 
     @NonNull
@@ -35,27 +33,29 @@ public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PlanadayEvent event = events.get(position);
+        PlanadayEvent event = suggestedEvents.get(position);
         holder.bind(event);
     }
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return suggestedEvents.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         private TextView tvEventName;
+        private TextView tvEventLocation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             tvEventName = itemView.findViewById(R.id.tvEventName);
+            tvEventLocation = itemView.findViewById(R.id.tvEventLocation);
         }
 
         public void bind(PlanadayEvent event) {
-            Log.i(TAG, "binding");
             tvEventName.setText(event.getEventName());
+            tvEventLocation.setText(event.getLocation());
         }
     }
 }

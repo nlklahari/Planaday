@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -24,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.planaday.LocationFetch;
+import com.example.planaday.LocationFetcher;
 import com.example.planaday.plan_generation.GeneratePlan;
 import com.example.planaday.R;
 import com.example.planaday.activities.PlanDetailsActivity;
@@ -40,16 +39,11 @@ import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.tabs.TabLayout;
 
 import com.hootsuite.nachos.NachoTextView;
-import com.hootsuite.nachos.chip.Chip;
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
 import com.hootsuite.nachos.validator.ChipifyingNachoValidator;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,12 +58,9 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     private RelativeLayout rlMainContent;
 
     private EditText etPlanName;
-    private TextView tvDateField;
-    private TextView tvSelectedDate;
-    public TextView tvStartTimeField;
-    public TextView tvSelectedStartTime;
-    public TextView tvEndTimeField;
-    public TextView tvSelectedEndTime;
+    private EditText etDate;
+    private EditText etStartTime;
+    private EditText etEndTime;
 
     private Switch switchEnvironment;
     private String environmentSelected;
@@ -110,8 +101,8 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LocationFetch locationFetch = new LocationFetch(getContext(), getActivity());
-        lastKnownLocation = locationFetch.getLocation(savedInstanceState);
+        LocationFetcher locationFetcher = new LocationFetcher(getContext(), getActivity());
+        lastKnownLocation = locationFetcher.getLocation(savedInstanceState);
         if (lastKnownLocation != null) {
             Log.i(TAG, "latitude: " + lastKnownLocation.getLatitude());
         }
@@ -141,13 +132,13 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
      */
     private void fieldsSetOnClickListener() {
         // Date field
-        tvDateField.setOnClickListener(new View.OnClickListener() {
+        etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerFragment newFragment = new DatePickerFragment(new OnSuccessListener<DatePickerFragment>() {
                     @Override
                     public void onSuccess(DatePickerFragment datePickerFragment) {
-                        datePickerFragment.setTVField(tvSelectedDate);
+                        datePickerFragment.setTVField(etDate);
                     }
                 });
                 newFragment.show(getChildFragmentManager(), "datePicker");
@@ -155,21 +146,20 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         });
 
         // Start time field
-        tvStartTimeField.setOnClickListener(new View.OnClickListener() {
+        etStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerFragment newFragment = new TimePickerFragment(tvSelectedStartTime);
+                TimePickerFragment newFragment = new TimePickerFragment(etStartTime);
                 newFragment.getTime();
                 newFragment.show(getChildFragmentManager(), "startTimePicker");
-                // TODO: check if start time is after current time and end time > start time
             }
         });
 
         // End time field
-        tvEndTimeField.setOnClickListener(new View.OnClickListener() {
+        etEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new TimePickerFragment(tvSelectedEndTime);
+                DialogFragment newFragment = new TimePickerFragment(etEndTime);
                 newFragment.show(getChildFragmentManager(), "endTimePicker");
             }
         });
@@ -200,8 +190,8 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                     String currentLocation = "47,-122";
 
                     planGenerator = new GeneratePlan( CreatePlanFragment.this,
-                            etPlanName.getText().toString(), tvSelectedDate.getText().toString(),
-                            tvSelectedStartTime.getText().toString(), tvSelectedEndTime.getText().toString(),
+                            etPlanName.getText().toString(), etDate.getText().toString(),
+                            etStartTime.getText().toString(), etEndTime.getText().toString(),
                             selectedDistance*1609, currentLocation, keywordsSelected,
                             environmentSelected, settingSelected);
                 }
@@ -276,20 +266,14 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
 
         rlMainContent = view.findViewById(R.id.rlMainContent);
 
+        // Plan Name
         etPlanName = view.findViewById(R.id.etPlanName);
-
         // Date Picker
-        tvDateField = view.findViewById(R.id.tvDateField);
-        tvSelectedDate = view.findViewById(R.id.tvSelectedDate);
-
+        etDate = view.findViewById(R.id.tvDateField);
         // Start Time Picker
-        tvStartTimeField = view.findViewById(R.id.tvStartTimeField);
-        tvSelectedStartTime = view.findViewById(R.id.tvSelectedStartTime);
-
+        etStartTime = view.findViewById(R.id.tvStartTimeField);
         // End Time Picker
-        tvEndTimeField = view.findViewById(R.id.tvEndTimeField);
-        tvSelectedEndTime = view.findViewById(R.id.tvSelectedEndTime);
-
+        etEndTime = view.findViewById(R.id.tvEndTimeField);
         // Setting Switch
         settingSwitchResult(view);
         // Environment Switch
@@ -367,6 +351,13 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
      */
     private void distanceRangeSliderResult(View view) {
         rsDistance = view.findViewById(R.id.rsDistance);
+//        rsDistance.setLabelFormatter(new LabelFormatter() {
+//            @NonNull
+//            @Override
+//            public String getFormattedValue(float value) {
+//                return value + " mi";
+//            }
+//        });
         selectedDistance = 0;
         rsDistance.addOnChangeListener(new RangeSlider.OnChangeListener() {
             @Override

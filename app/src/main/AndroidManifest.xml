@@ -16,14 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Planaday">
-        <activity android:name=".activities.PlanDetailsActivity"></activity>
+        <activity android:name=".activities.PlanDetailsActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.SplashScreenActivity">
-            <intent-filter>
+            <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -43,7 +42,7 @@
         <!-- Required for Android 10 (API level 29) and higher. -->
         <service
             android:name=".activities.MainActivity"
-            android:foregroundServiceType="location"></service>
+            android:foregroundServiceType="location" />
     </application>
 
 </manifest>

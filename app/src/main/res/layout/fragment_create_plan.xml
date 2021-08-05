@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="15dp"
+    android:layout_marginHorizontal="25dp"
     tools:context=".fragments.CreatePlanFragment">
 
     <RelativeLayout
@@ -14,76 +14,121 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="102dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="37dp"
-            android:text="Cancel" />
 
-        <Button
-            android:id="@+id/btnFinish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/btnCancel"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="74dp"
-            android:layout_marginBottom="37dp"
-            android:layout_toRightOf="@id/btnCancel"
-            android:text="Finish" />
+            android:layout_marginTop="25dp"
+            app:placeholderText="Name your plan"
+            android:hint="Plan Name"
+            app:boxBackgroundColor="@color/peach_puff"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxStrokeColor="@color/blush"
+            app:boxStrokeWidth="0dp">
 
-        <TextView
-            android:id="@+id/tvStartTimeField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="63dp"
-            android:layout_marginTop="167dp"
-            android:text="Start Time"
-            android:textSize="16sp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlanName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tvPriceField"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiDate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="61dp"
-            android:layout_marginTop="208dp"
-            android:text="Budget"
-            android:textSize="16sp" />
+            android:layout_below="@+id/tiName"
+            android:layout_marginTop="25dp"
+            app:placeholderText="MM/dd/yyyy"
+            android:hint="Date"
+            app:boxBackgroundColor="@color/peach_puff"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxStrokeColor="@color/blush"
+            app:boxStrokeWidth="0dp"
+            app:startIconDrawable="@drawable/ic_round_calendar_today_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tvDateField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiStartTime"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tiDate"
+            android:layout_marginTop="25dp"
+            android:hint="@string/start_time"
+            app:boxBackgroundColor="@color/peach_puff"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxStrokeColor="@color/blush"
+            app:boxStrokeWidth="0dp"
+            app:startIconDrawable="@drawable/ic_baseline_access_time_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tvStartTimeField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiEndTime"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tiDate"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_toEndOf="@+id/tiStartTime"
+            android:hint="@string/end_time"
+            app:boxBackgroundColor="@color/peach_puff"
+            app:boxCornerRadiusBottomEnd="15dp"
+            app:boxCornerRadiusBottomStart="15dp"
+            app:boxStrokeColor="@color/blush"
+            app:boxStrokeWidth="0dp"
+            app:startIconDrawable="@drawable/ic_baseline_access_time_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tvEndTimeField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tvDistanceField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="254dp"
+            android:layout_below="@id/tiStartTime"
+
+            android:layout_marginTop="25dp"
             android:text="Distance"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tvEndTimeField"
-            android:layout_width="wrap_content"
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/rsDistance"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="219dp"
-            android:layout_marginTop="166dp"
-            android:text="End Time"
-            android:textSize="16sp" />
+            android:layout_below="@id/tiStartTime"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@id/tvDistanceField"
+            android:stepSize="10.0"
+            android:valueFrom="0"
+            android:valueTo="1000" />
 
         <TextView
             android:id="@+id/tvSettingTextOff"
@@ -92,8 +137,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="311dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="329dp"
             android:text="Individual"
             android:textSize="16sp" />
 
@@ -104,8 +149,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="268dp"
-            android:layout_marginTop="314dp"
+            android:layout_marginStart="241dp"
+            android:layout_marginTop="330dp"
             android:text="Group"
             android:textSize="16sp" />
 
@@ -116,10 +161,12 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="178dp"
-            android:layout_marginTop="313dp"
+            android:layout_marginStart="166dp"
+            android:layout_marginTop="329dp"
             android:textOff="individual"
             android:textOn="group"
+            android:trackTint="@color/violet_crayola"
+            android:thumbTint="@color/violet_crayola"
             android:textSize="20sp"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -142,12 +189,15 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="189dp"
+            android:layout_marginStart="169dp"
             android:layout_marginTop="371dp"
             android:textOff="indoor"
             android:textOn="outdoor"
+            android:trackTint="@color/violet_crayola"
+            android:thumbTint="@color/violet_crayola"
             android:textSize="20sp"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
+
 
         <TextView
             android:id="@+id/tvEnvironmentTextOn"
@@ -156,51 +206,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="277dp"
-            android:layout_marginTop="369dp"
+            android:layout_marginStart="248dp"
+            android:layout_marginTop="373dp"
             android:text="Outdoor"
             android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tvDateField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvNameLabel"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="78dp"
-            android:layout_marginTop="28dp"
-            android:text="Date"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/etPlanName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="43dp"
-            android:layout_marginTop="60dp"
-            android:layout_toEndOf="@+id/tvNameLabel"
-            android:hint="Name your plan" />
-
-        <EditText
-            android:id="@+id/etMaxPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="73dp"
-            android:layout_marginTop="197dp"
-            android:layout_toEndOf="@+id/tvNameLabel"
-            android:hint="Max Price" />
-
-        <TextView
-            android:id="@+id/tvNameLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="65dp"
-            android:layout_marginTop="70dp"
-            android:text="Plan Name" />
 
         <TextView
             android:id="@+id/tvAdvancedPreferences"
@@ -209,71 +218,12 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="64dp"
             android:layout_marginBottom="91dp"
             android:clickable="true"
             android:text="Advanced Preferences"
             android:textColor="#2196F3"
             android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="165dp"
-            android:background="@color/dark_purple"
-            android:src="@drawable/ic_baseline_access_time_24" />
-
-        <TextView
-            android:id="@+id/tvSelectedStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="168dp"
-            android:layout_marginEnd="193dp"
-            android:textAlignment="viewStart"
-            tools:text="21:30" />
-
-        <TextView
-            android:id="@+id/tvSelectedDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="123dp"
-            android:layout_marginEnd="137dp"
-            android:textAlignment="viewStart"
-            android:textSize="16sp"
-            tools:text="06/21/21" />
-
-        <TextView
-            android:id="@+id/tvSelectedEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="169dp"
-            android:layout_marginEnd="31dp"
-            android:textAlignment="viewStart"
-            tools:text="22:30" />
-
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/rsDistance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/etMaxPrice"
-            android:layout_marginHorizontal="15dp"
-            android:layout_toEndOf="@id/tvDistanceField"
-            android:valueFrom="0"
-            android:valueTo="1000"
-            android:stepSize="10.0"
-            >
-
-        </com.google.android.material.slider.RangeSlider>
 
         <com.hootsuite.nachos.NachoTextView
             android:id="@+id/ntvKeywords"
@@ -284,6 +234,32 @@
             android:hint='Enter some keywords for your plan. (Ex: "education", "park", "restaurant") The more, the better!'
             app:chipBackground="@color/peach_puff"
             app:chipTextColor="@color/violet_crayola" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="68dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="38dp"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/btnFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/btnCancel"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="74dp"
+            android:layout_marginBottom="37dp"
+            android:layout_toEndOf="@id/btnCancel"
+            android:text="Finish" />
 
     </RelativeLayout>
 

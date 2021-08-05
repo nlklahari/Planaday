@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CalendarFragment extends Fragment {
+public class  CalendarFragment extends Fragment {
 
     private static final String TAG = CalendarFragment.class.getSimpleName();
 
@@ -93,7 +93,15 @@ public class CalendarFragment extends Fragment {
         query.include(Plan.KEY_AUTHOR);
         query.whereEqualTo(Plan.KEY_AUTHOR, ParseUser.getCurrentUser());
 
-        String selectedDateString = month + "/" + dayOfMonth + "/" + year;
+        String selectedDateString = "";
+        if (month < 10) {
+            selectedDateString = "0";
+        }
+        selectedDateString += (month + 1) + "/";
+        if (dayOfMonth < 10) {
+            selectedDateString+= "0";
+        }
+        selectedDateString += dayOfMonth + "/" + year;
 
         query.whereEqualTo(Plan.KEY_DATE_STRING, selectedDateString);
         query.setLimit(20);

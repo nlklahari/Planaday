@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:elevation="10dp"
-    app:rippleColor="@color/violet_crayola"
-    android:layout_margin="8dp">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp">
+    android:layout_height="125dp"
+    android:padding="15dp">
 
         <TextView
             android:id="@+id/tvPlanName"
@@ -20,9 +11,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:textColor="@color/dark_purple"
-            android:textSize="20sp"
-            tools:text="Plan #1" />
+            android:background="#C8C5C5" />
 
         <TextView
             android:id="@+id/tvPlanTime"
@@ -33,29 +22,26 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/tvPlanName"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            tools:text="4:30pm - 9:30pm" />
+            android:background="#C8C5C5" />
 
         <TextView
             android:id="@+id/tvPlanDuration"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPlanTime"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/tvPlanName"
-            android:textAlignment="textEnd"
-            android:textSize="16sp"
-            tools:text="5 hrs" />
+            android:background="#C8C5C5" />
 
         <TextView
             android:id="@+id/tvPlanDate"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPlanName"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
-            tools:text="06/06/3032" />
+            android:background="#C8C5C5" />
     </RelativeLayout>
-</com.google.android.material.card.MaterialCardView>
+
+

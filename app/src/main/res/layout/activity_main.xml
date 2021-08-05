@@ -20,7 +20,7 @@
                 android:id="@+id/tabLayout"
                 app:tabTextAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 app:tabInlineLabel="true"
-                app:tabRippleColor="@color/blush" >
+                app:tabRippleColor="@color/peach_puff" >
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tab_saved_plans"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:hideOnScroll="true"
-            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+            android:backgroundTint="@color/blush"
             app:fabAlignmentMode="end"
             app:navigationIcon="@drawable/ic_baseline_menu_24"
             app:menu="@menu/menu_bottom_navigation" />

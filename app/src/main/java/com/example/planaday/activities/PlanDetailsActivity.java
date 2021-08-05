@@ -25,7 +25,6 @@ public class PlanDetailsActivity extends AppCompatActivity {
     private TextView tvPlanName;
     private TextView tvPlanDate;
     private TextView tvPlanTime;
-    private TextView tvPlanPrice;
     private TextView tvPlanDuration;
 
     private RecyclerView rvEvents;
@@ -41,7 +40,6 @@ public class PlanDetailsActivity extends AppCompatActivity {
         tvPlanName = findViewById(R.id.tvPlanName);
         tvPlanDate = findViewById(R.id.tvPlanDate);
         tvPlanTime = findViewById(R.id.tvPlanTime);
-        tvPlanPrice = findViewById(R.id.tvPlanPrice);
         tvPlanDuration = findViewById(R.id.tvPlanDuration);
 
         rvEvents = findViewById(R.id.rvEvents);
@@ -50,8 +48,7 @@ public class PlanDetailsActivity extends AppCompatActivity {
 
         tvPlanName.setText(plan.getPlanName());
         tvPlanDate.setText(plan.getPlanDateString());
-        // plan time
-        tvPlanPrice.setText("$ " + plan.getPrice());
+        tvPlanTime.setText(plan.getStringTime());
         tvPlanDuration.setText(plan.getDuration() + " hrs");
 
         selectedEvents = new ArrayList<>();

@@ -116,6 +116,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // TODO: Find better solution with flags
+        finish();
     }
 }

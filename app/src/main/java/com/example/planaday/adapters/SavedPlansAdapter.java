@@ -114,7 +114,7 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvPlanName;
         private TextView tvPlanTime;
-        private TextView tvPlanPrice;
+
         private TextView tvPlanDuration;
         private TextView tvPlanDate;
 
@@ -123,7 +123,6 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
 
             tvPlanName = itemView.findViewById(R.id.tvPlanName);
             tvPlanTime = itemView.findViewById(R.id.tvPlanTime);
-            tvPlanPrice = itemView.findViewById(R.id.tvPlanPrice);
             tvPlanDuration = itemView.findViewById(R.id.tvPlanDuration);
             tvPlanDate = itemView.findViewById(R.id.tvPlanDate);
 
@@ -145,7 +144,6 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
             Log.i("SavedPlansAdapter", "Binding entered");
             tvPlanName.setText(plan.getPlanName());
             tvPlanTime.setText(plan.getStringTime());
-            tvPlanPrice.setText("$ " + plan.getPrice());
             tvPlanDuration.setText(plan.getDuration() + " hrs");
             tvPlanDate.setText(plan.getPlanDateString());
         }

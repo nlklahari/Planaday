@@ -25,9 +25,9 @@ public class PlanadayEvent extends ParseObject {
     private static final String KEY_LOCATION = "location"; // could be stored as lat and long
     private static final String KEY_ENVIRONMENT = "environment"; //indoor or outdoor
     private static final String KEY_SETTING = "setting"; //individual or group
-    private static final String KEY_PRICE = "price";
 
-    public PlanadayEvent() {}
+    public PlanadayEvent() {
+    }
 
     public static List<PlanadayEvent> fromJSONArray(JSONArray results, ParseUser user) throws JSONException {
         List<PlanadayEvent> events = new ArrayList<>();
@@ -49,7 +49,6 @@ public class PlanadayEvent extends ParseObject {
             fromJsonToPlanadayEvent.setLocation(jsonObject.getString("location"));
             // environment
             // setting
-            // price
 
             // Add
             events.add(fromJsonToPlanadayEvent);
@@ -116,13 +115,5 @@ public class PlanadayEvent extends ParseObject {
 
     public void setSetting(String setting) {
         put(KEY_SETTING, setting);
-    }
-
-    public double getPrice() {
-        return getDouble(KEY_PRICE);
-    }
-
-    public void setPrice(int price) {
-        put(KEY_PRICE, price);
     }
 }

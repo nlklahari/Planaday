@@ -8,21 +8,20 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class LocationFetch implements  ActivityCompat.OnRequestPermissionsResultCallback {
-    private static final int LOCATION_PERMISSION_CODE = 1;
+public class LocationFetcher {
+    public static final int LOCATION_PERMISSION_CODE = 1;
     private static final String KEY_LOCATION = "location";
-    private static final String TAG = LocationFetch.class.getSimpleName();
+    private static final String TAG = LocationFetcher.class.getSimpleName();
 
     private Context context;
     private Activity activity;
@@ -34,7 +33,7 @@ public class LocationFetch implements  ActivityCompat.OnRequestPermissionsResult
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
 
-    public LocationFetch(Context context, Activity activity) {
+    public LocationFetcher(Context context, Activity activity) {
         this.context = context;
         this.activity = activity;
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
@@ -56,14 +55,20 @@ public class LocationFetch implements  ActivityCompat.OnRequestPermissionsResult
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 Log.d(TAG, "location was not null");
+                                Log.d(TAG, "latitude: " + location.getLatitude());
                                 lastKnownLocation = location;
                             } else {
                                 Log.e(TAG, "location was null");
                             }
                         }
-                    });
+                    }).addOnFailureListener(activity, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e(TAG, "Location access failed");
+                }
+            });
         } else if (activity.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            new AlertDialog.Builder(context)
+            new AlertDialog.Builder(activity)
                     .setTitle("Permission needed")
                     .setMessage("Location permission needed to calculate distance from your location to events in your plans.")
                     .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -92,19 +97,6 @@ public class LocationFetch implements  ActivityCompat.OnRequestPermissionsResult
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "permission to background location granted");
-                Toast.makeText(context, "Permission GRANTED", Toast.LENGTH_SHORT).show();
-            } else {
-                Log.d(TAG, "permission to background location denied");
-                Toast.makeText(context, "Permission DENIED", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     /**
      * Retrieve location and camera position from saved instance state.

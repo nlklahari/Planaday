@@ -1,18 +1,18 @@
 package com.example.planaday.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.animation.Animator;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.example.planaday.LocationFetcher;
 import com.example.planaday.R;
 import com.example.planaday.fragments.CreatePlanFragment;
 import com.example.planaday.fragments.ExploreFragment;
@@ -24,6 +24,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private BottomAppBar bottomAppBar;
     private FloatingActionButton fab;
@@ -88,8 +90,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LocationFetcher.LOCATION_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "permission to background location granted");
+                Toast.makeText(this, "Permission GRANTED", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.d(TAG, "permission to background location denied");
+                Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     /**
      * Replaces frame layot container with given Fragment

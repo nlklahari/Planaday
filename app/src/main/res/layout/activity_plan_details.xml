@@ -58,13 +58,6 @@
             android:layout_marginStart="15dp">
 
             <TextView
-                android:id="@+id/tvPlanPrice"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                tools:text="Est. total price: $100" />
-
-            <TextView
                 android:id="@+id/tvPlanDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
