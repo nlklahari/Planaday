@@ -74,7 +74,6 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     private NachoTextView ntvKeywords;
     private List<String> keywordsSelected;
 
-    private TextView tvAdvancedPreferences;
     private Button btnFinish;
     private Button btnCancel;
 
@@ -101,11 +100,12 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LocationFetcher locationFetcher = new LocationFetcher(getContext(), getActivity());
-        lastKnownLocation = locationFetcher.getLocation(savedInstanceState);
-        if (lastKnownLocation != null) {
-            Log.i(TAG, "latitude: " + lastKnownLocation.getLatitude());
-        }
+        LocationFetcher locationFetcher = new LocationFetcher(getContext(), getActivity(), new OnSuccessListener<LocationFetcher>() {
+            @Override
+            public void onSuccess(LocationFetcher locationFetcher) {
+                lastKnownLocation = locationFetcher.getLocation();
+            }
+        });
 
         setupFieldsByID(view);
         fieldsSetOnClickListener();
@@ -149,8 +149,12 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         etStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerFragment newFragment = new TimePickerFragment(etStartTime);
-                newFragment.getTime();
+                TimePickerFragment newFragment = new TimePickerFragment(new OnSuccessListener<TimePickerFragment>() {
+                    @Override
+                    public void onSuccess(TimePickerFragment timePickerFragment) {
+                        timePickerFragment.setTVField(etStartTime);
+                    }
+                });
                 newFragment.show(getChildFragmentManager(), "startTimePicker");
             }
         });
@@ -159,16 +163,13 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         etEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new TimePickerFragment(etEndTime);
+                DialogFragment newFragment = new TimePickerFragment(new OnSuccessListener<TimePickerFragment>() {
+                    @Override
+                    public void onSuccess(TimePickerFragment timePickerFragment) {
+                        timePickerFragment.setTVField(etEndTime);
+                    }
+                });
                 newFragment.show(getChildFragmentManager(), "endTimePicker");
-            }
-        });
-
-        // Advanced Preferences
-        tvAdvancedPreferences.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
     }
@@ -187,7 +188,14 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                     animLoading.setVisibility(View.VISIBLE);
                     animLoading.playAnimation();
 
-                    String currentLocation = "47,-122";
+                    String currentLocation;
+                    if (lastKnownLocation == null) {
+                        Log.d(TAG, "used default location");
+                        currentLocation = "47,-122";
+                    } else {
+                        Log.d(TAG, "got location from current user's position");
+                        currentLocation = lastKnownLocation.getLatitude() + "," + lastKnownLocation.getLongitude();
+                    }
 
                     planGenerator = new GeneratePlan( CreatePlanFragment.this,
                             etPlanName.getText().toString(), etDate.getText().toString(),
@@ -283,7 +291,6 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         // Keywords Selection
         keywordsNTVResult(view);
 
-        tvAdvancedPreferences = view.findViewById(R.id.tvAdvancedPreferences);
         btnFinish = view.findViewById(R.id.btnFinish);
         btnCancel = view.findViewById(R.id.btnCancel);
 

@@ -20,7 +20,7 @@ public class BoredAPIRequests {
     private static final BoredAPIInterface apiService = APIClients.getBoredAPIClient().create(BoredAPIInterface.class);
     private static List<BoredAPIEvent> boredAPIEvents = new ArrayList<>();
 
-    private static String[] outdoorKeywords = new String[]{"park", "Park", "mountain", "hiking", "pool", "picnic", "play", "volleyball"};
+    private static String[] outdoorKeywords = {"park", "Park", "mountain", "hiking", "pool", "picnic", "play", "volleyball", "bonfire", "hike"};
 
     /**
      *  Get a random activity based on the number of participants

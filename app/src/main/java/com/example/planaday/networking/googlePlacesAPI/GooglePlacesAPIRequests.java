@@ -22,7 +22,7 @@ public class GooglePlacesAPIRequests {
     private static final GooglePlacesAPIInterface apiService = APIClients.getGoogleAPIClient().create(GooglePlacesAPIInterface.class);
     private static List<GooglePlacesAPIEvent> googleAPIEvents = new ArrayList<>();
 
-    private static String[] outdoorKeywords = new String[]{"park", "Park", "mountain", "Mountain", "hiking", "pool", "picnic", "play", "Play", "Stargaze"};
+    private static String[] outdoorKeywords = {"park", "Park", "mountain", "Mountain", "hiking", "pool", "picnic", "play", "Play", "Stargaze", "Wetlands", "Trail", "Sports"};
 
     /**
      *
@@ -32,7 +32,7 @@ public class GooglePlacesAPIRequests {
      * @param currentLocation
      * @param listener
      */
-    public static void getPlaces(String key, String input, int maxDistance, String currentLocation, APIRequestResponseListener listener) {
+    public static void getPlaces(String key, String input, int maxDistance, String currentLocation, APIRequestResponseListener listener, String setting) {
         Call<GooglePlacesAPIEvent> call = apiService.getPlaces(input, "textquery",
                 "name,formatted_address,types", "circle:"+maxDistance+"@"+currentLocation,
                 API_KEY );
@@ -44,7 +44,7 @@ public class GooglePlacesAPIRequests {
 
                 if (response.body() != null && !response.body().getStatus().equals("ZERO_RESULTS")) {
                     googleAPIEvents.add(response.body());
-                    listener.onComplete(key, getGoogleAPIEvents());
+                    listener.onComplete(key, getGoogleAPIEvents(setting));
                     googleAPIEvents.clear();
                 } else {
                     listener.onComplete(key, null);
@@ -62,7 +62,7 @@ public class GooglePlacesAPIRequests {
      *
      * @return
      */
-    public static List<PlanadayEvent> getGoogleAPIEvents() {
+    public static List<PlanadayEvent> getGoogleAPIEvents(String setting) {
         List<PlanadayEvent> planadayEvents = new ArrayList<>();
         for (int i = 0; i < googleAPIEvents.size(); i++) {
             GooglePlacesAPIEvent current = googleAPIEvents.get(i);
@@ -71,15 +71,14 @@ public class GooglePlacesAPIRequests {
             // Convert the GooglePlacesAPIEvent into a PlanadayEvent
             temp.setEventName(current.getCandidates().get(0).getName());
             temp.setDuration(1);
-            temp.setSetting("group");
+            temp.setSetting(setting);
             temp.setEnvironment("indoor");
             for (int j = 0; j < outdoorKeywords.length; j++) {
-                if (temp.getEventName().contains(outdoorKeywords[i])) {
+                if (temp.getEventName().contains(outdoorKeywords[j])) {
+                    Log.d(TAG, "tagged as outdoor event");
                     temp.setEnvironment("outdoor");
                 }
             }
-            // String[] types = current.getCandidates().get(0).getTypes();
-            // temp.setTypes(types);
             temp.setLocation(current.getCandidates().get(0).getFormattedAddress());
 
             // Add it to array of planadayEvents

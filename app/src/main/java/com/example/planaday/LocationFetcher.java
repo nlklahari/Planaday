@@ -33,9 +33,12 @@ public class LocationFetcher {
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
 
-    public LocationFetcher(Context context, Activity activity) {
+    private OnSuccessListener<LocationFetcher> listener;
+
+    public LocationFetcher(Context context, Activity activity, OnSuccessListener<LocationFetcher> listener) {
         this.context = context;
         this.activity = activity;
+        this.listener = listener;
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
         fetchLocation();
     }
@@ -57,6 +60,7 @@ public class LocationFetcher {
                                 Log.d(TAG, "location was not null");
                                 Log.d(TAG, "latitude: " + location.getLatitude());
                                 lastKnownLocation = location;
+                                listener.onSuccess(LocationFetcher.this);
                             } else {
                                 Log.e(TAG, "location was null");
                             }
@@ -101,10 +105,7 @@ public class LocationFetcher {
     /**
      * Retrieve location and camera position from saved instance state.
      */
-    public Location getLocation(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-        }
+    public Location getLocation() {
         return lastKnownLocation;
     }
 }

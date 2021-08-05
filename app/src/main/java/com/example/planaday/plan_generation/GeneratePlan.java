@@ -1,7 +1,9 @@
 package com.example.planaday.plan_generation;
 
+import android.app.TimePickerDialog;
 import android.util.Log;
 
+import com.example.planaday.fragments.widgets.TimePickerFragment;
 import com.example.planaday.models.Plan;
 import com.example.planaday.models.PlanadayEvent;
 import com.example.planaday.networking.googlePlacesAPI.GooglePlacesAPIRequests;
@@ -37,6 +39,7 @@ public class GeneratePlan implements APIRequestResponseListener {
     private APIRequestsCompleteListener listener;
 
     private String environment;
+    private String setting;
 
     /**
      * Generates a new plan with current user preferences
@@ -54,10 +57,12 @@ public class GeneratePlan implements APIRequestResponseListener {
         this.plan = new Plan();
         this.listener = listener;
         this.environment = environment;
+        this.setting = setting;
 
         plan.setPlanName(planName);
-        plan.setDuration(7);
+        plan.setDuration(TimePickerFragment.getDuration(planStartTime, planEndTime));
         plan.setPlanDateString(planDate);
+        plan.setStringTime(planStartTime + " - " + planEndTime);
 
         if (setting.equals("group")) {
             Log.i(TAG, "Group events selected");
@@ -66,7 +71,7 @@ public class GeneratePlan implements APIRequestResponseListener {
             Log.i(TAG, "Individual events selected");
             individualEvents();
         }
-        locationBasedEvents(maxDistance, currentLocation, keywords);
+        locationBasedEvents(maxDistance, currentLocation, keywords, setting);
     }
 
     /**
@@ -96,12 +101,12 @@ public class GeneratePlan implements APIRequestResponseListener {
      * @param currentLocation
      * @param keywords
      */
-    private void locationBasedEvents(int maxDistance, String currentLocation, List<String> keywords) {
+    private void locationBasedEvents(int maxDistance, String currentLocation, List<String> keywords, String setting) {
         for (int i = 0 ; i < keywords.size(); i++) {
             Log.d(TAG, "entered location based events method");
             String key = "locationBasedEvents" + i;
             apiCallComplete.put(key, false);
-            GooglePlacesAPIRequests.getPlaces(key, keywords.get(i), maxDistance, currentLocation, this);
+            GooglePlacesAPIRequests.getPlaces(key, keywords.get(i), maxDistance, currentLocation, this, setting);
         }
     }
 
@@ -116,11 +121,16 @@ public class GeneratePlan implements APIRequestResponseListener {
             int totalDuration = 0;
             for (int i = 0; i < validEvents.size(); i++) {
                 // parse through events list and create a plan
-                if (plan.getDuration() > totalDuration && validEvents.get(i).getEnvironment().equals(environment)) {
+                if (validEvents.get(i).getEnvironment().equals(environment) && validEvents.get(i).getSetting().equals(setting)) {
+                    Log.d(TAG, "entered outdoor + individual");
+                } else {
+                    Log.d(TAG, "name of event: " + validEvents.get(i).getEventName() + " setting: " + validEvents.get(i).getSetting() + " environment: " + validEvents.get(i).getEnvironment());
+                }
+                if (plan.getDuration() > totalDuration && validEvents.get(i).getEnvironment().equals(environment) && validEvents.get(i).getSetting().equals(setting)) {
                     Log.i("GeneratePlan", "Adding events and duration: " + totalDuration);
                     selectedEvents.add(validEvents.get(i));
+                    totalDuration += validEvents.get(i).getDuration();
                 }
-                totalDuration += validEvents.get(i).getDuration();
             }
             plan.setEvents(selectedEvents);
             listener.onCompleteAllRequests();

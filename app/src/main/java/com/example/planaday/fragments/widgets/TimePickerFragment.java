@@ -4,21 +4,22 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.fragment.app.DialogFragment;
 
 import com.example.planaday.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
-    private TextView field;
-    private int[] time;
+    private OnSuccessListener<TimePickerFragment> listener;
+    private String timeString;
 
-    public TimePickerFragment(TextView field) {
-        this.field = field;
-        time = new int[2];
+    public TimePickerFragment(OnSuccessListener<TimePickerFragment> listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -35,21 +36,36 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        String stringTime = "";
+        timeString = "";
         if (hourOfDay < 10) {
-            stringTime += 0;
+            timeString += 0;
         }
-        stringTime += hourOfDay + ":";
+        timeString += hourOfDay + ":";
         if (minute < 10) {
-            stringTime += 0;
+            timeString += 0;
         }
-        time[0] = hourOfDay;
-        time[1] = minute;
-        stringTime += String.valueOf(minute);
-        field.setText(stringTime);
+        timeString += String.valueOf(minute);
+        listener.onSuccess(this);
     }
 
-    public int[] getTime() {
-        return time;
+    /**
+     * Sets the TextView with the string format of the date
+     * @return
+     */
+    public void setTVField(TextView field1) {
+        Log.i("TimePickerFragment", "setting textview to selected time");
+        field1.setText(timeString);
+    }
+
+    /**
+     *
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public static int getDuration(String startTime, String endTime) {
+        int startHour = Integer.parseInt(startTime.substring(0,2));
+        int endHour = Integer.parseInt(endTime.substring(0,2));
+        return endHour - startHour;
     }
 }
