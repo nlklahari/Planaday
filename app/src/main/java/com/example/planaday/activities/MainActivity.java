@@ -1,5 +1,6 @@
 package com.example.planaday.activities;
 
+import androidx.annotation.AnimatorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,8 +11,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.fading_exits.FadeOutAnimator;
 import com.example.planaday.LocationFetcher;
 import com.example.planaday.R;
 import com.example.planaday.fragments.CreatePlanFragment;
@@ -76,7 +82,27 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchFragment(new CreatePlanFragment());
+                View circle_bg = findViewById(R.id.circle_bg_fab);
+                Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.circle_explosion_anim);
+                animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        launchFragment(new CreatePlanFragment());
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                circle_bg.startAnimation(animation);
+                bottomAppBar.performHide();
+                fab.hide();
             }
         });
 

@@ -4,7 +4,7 @@ package com.example.planaday.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Candidate {
+public class GooglePlacesAPIEventCandidate {
 
     @SerializedName("formatted_address")
     @Expose

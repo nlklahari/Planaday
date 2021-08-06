@@ -48,19 +48,27 @@
 
         <!--the normal Floating action button which is
     anchored to the bottom navigation button-->
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabCreatePlan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/blush"
-            android:overScrollMode="always"
-            app:layout_anchor="@id/bottomAppBar"
-            android:foregroundGravity="top"
-            app:rippleColor="@color/peach_puff"
-            app:srcCompat="@android:drawable/ic_input_add" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCreatePlan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/blush"
+        android:overScrollMode="always"
+        app:srcCompat="@drawable/ic_baseline_add_24"
+        app:tint="@color/white"
+        app:layout_anchor="@id/bottomAppBar" />
 
-        <!--the usual bottom navigation bar with items-->
-        <com.google.android.material.bottomappbar.BottomAppBar
+    <!--the usual bottom navigation bar with items-->
+    <View
+        android:id="@+id/circle_bg_fab"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/circle_bg_fab"
+        android:visibility="invisible"
+        app:layout_anchor="@+id/fabCreatePlan"
+        app:layout_anchorGravity="center" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -19,51 +19,45 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:textSize="36sp"
+            android:layout_toStartOf="@+id/tvPlanTime"
+            android:textColor="@color/dark_purple"
+            android:textSize="25sp"
             tools:text="Plan #1" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvPlanTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/planDetailsLLBlock1"
-            android:orientation="vertical"
-            android:layout_below="@+id/tvPlanName">
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_alignTop="@id/tvPlanName"
+            android:textAlignment="textEnd"
+            android:textSize="18sp"
+            tools:text="4:30pm - 9:30pm" />
 
-            <TextView
-                android:id="@+id/tvPlanDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:textSize="20dp"
-                tools:text="6/6/21" />
-
-            <TextView
-                android:id="@+id/tvPlanTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="5dp"
-                android:textSize="20dp"
-                tools:text="4:30pm - 9:30pm" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvPlanDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/planDetailsLLBlock2"
-            android:orientation="vertical"
+            android:layout_below="@+id/tvPlanTime"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="textEnd"
+            android:textSize="18sp"
+            tools:text="5 hrs" />
+
+        <TextView
+            android:id="@+id/tvPlanDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvPlanName"
-            android:layout_toEndOf="@+id/planDetailsLLBlock1"
-            android:layout_marginStart="15dp">
-
-            <TextView
-                android:id="@+id/tvPlanDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                tools:text="Total Duration: 5 hrs" />
-        </LinearLayout>
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/tvPlanDuration"
+            android:textSize="18dp"
+            android:layout_marginTop="5dp"
+            tools:text="06/06/3032" />
 
     </RelativeLayout>
 
@@ -79,4 +73,16 @@
             android:layout_height="match_parent" />
 
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="30dp"
+        app:srcCompat="@drawable/ic_baseline_share_24"
+        app:tint="@color/white"
+        app:backgroundTint="@color/blush" />
+
 </RelativeLayout>

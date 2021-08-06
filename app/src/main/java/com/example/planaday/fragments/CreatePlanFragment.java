@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.planaday.LocationFetcher;
+import com.example.planaday.activities.MainActivity;
 import com.example.planaday.plan_generation.GeneratePlan;
 import com.example.planaday.R;
 import com.example.planaday.activities.PlanDetailsActivity;
@@ -90,6 +94,11 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
     }
 
     @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -106,6 +115,8 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                 lastKnownLocation = locationFetcher.getLocation();
             }
         });
+
+
 
         setupFieldsByID(view);
         fieldsSetOnClickListener();
@@ -191,7 +202,7 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
                     String currentLocation;
                     if (lastKnownLocation == null) {
                         Log.d(TAG, "used default location");
-                        currentLocation = "47,-122";
+                        currentLocation = "47.6162683,-122.0355736";
                     } else {
                         Log.d(TAG, "got location from current user's position");
                         currentLocation = lastKnownLocation.getLatitude() + "," + lastKnownLocation.getLongitude();
@@ -269,8 +280,6 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
 
         // Hide tab layout, bottom app bar, and floating action button
         tabLayout.setVisibility(View.GONE);
-        navBar.performHide();
-        fabCreatePlan.hide();
 
         rlMainContent = view.findViewById(R.id.rlMainContent);
 

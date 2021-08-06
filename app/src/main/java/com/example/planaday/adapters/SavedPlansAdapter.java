@@ -23,6 +23,7 @@ import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.ViewHolder> {

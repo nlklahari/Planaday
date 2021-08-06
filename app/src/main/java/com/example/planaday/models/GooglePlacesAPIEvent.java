@@ -9,16 +9,16 @@ public class GooglePlacesAPIEvent {
 
     @SerializedName("candidates")
     @Expose
-    private List<Candidate> candidates = null;
+    private List<GooglePlacesAPIEventCandidate> candidates = null;
     @SerializedName("status")
     @Expose
     private String status;
 
-    public List<Candidate> getCandidates() {
+    public List<GooglePlacesAPIEventCandidate> getCandidates() {
         return candidates;
     }
 
-    public void setCandidates(List<Candidate> candidates) {
+    public void setCandidates(List<GooglePlacesAPIEventCandidate> candidates) {
         this.candidates = candidates;
     }
 

@@ -23,6 +23,8 @@ import com.example.planaday.R;
 import com.example.planaday.adapters.CalendarPlansAdapter;
 import com.example.planaday.fragments.widgets.DatePickerFragment;
 import com.example.planaday.models.Plan;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -47,6 +49,9 @@ public class  CalendarFragment extends Fragment {
     private List<Plan> todayPlans;
     private CalendarPlansAdapter adapter;
 
+    private BottomAppBar navBar;
+    private TabLayout tabLayout;
+
     public CalendarFragment() {
         // Required empty public constructor
     }
@@ -64,6 +69,12 @@ public class  CalendarFragment extends Fragment {
 
         calendar = view.findViewById(R.id.calendar);
         rvTodayPlans = view.findViewById(R.id.rvTodayPlans);
+        navBar = getActivity().findViewById(R.id.bottomAppBar);
+        tabLayout = getActivity().findViewById(R.id.tabLayout);
+
+        navBar.setVisibility(View.GONE);
+        tabLayout.setVisibility(View.GONE);
+
         todayPlans = new ArrayList<>();
         adapter = new CalendarPlansAdapter(getContext(), getActivity(), todayPlans);
 
@@ -71,15 +82,17 @@ public class  CalendarFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvTodayPlans.setLayoutManager(layoutManager);
 
-//        Calendar cal = Calendar.getInstance();
-//        queryPlans(cal.getTime().getYear(), cal.getTime().getMonth(), cal.getTime().getDate());
+        Calendar c = Calendar.getInstance();
+        int year = c.get(android.icu.util.Calendar.YEAR);
+        int month = c.get(android.icu.util.Calendar.MONTH);
+        int day = c.get(android.icu.util.Calendar.DAY_OF_MONTH);
+        Log.d(TAG, year + " " + month + " " + day);
+
+        queryPlans(year, month, day);
 
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                SlideInUpAnimator animator = new SlideInUpAnimator();
-                animator.prepare(rvTodayPlans);
-                animator.animate();
                 todayPlans.clear();
                 adapter.notifyDataSetChanged();
                 queryPlans(year, month, dayOfMonth);
@@ -116,11 +129,21 @@ public class  CalendarFragment extends Fragment {
                 if (plans.isEmpty()) {
                     Log.d(TAG, "showing empty plans");
                     Toast.makeText(getContext(), "No plans for today", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                SlideInUpAnimator animator = new SlideInUpAnimator();
+                animator.prepare(rvTodayPlans);
+                animator.animate();
                 todayPlans.addAll(plans);
                 adapter.notifyDataSetChanged();
             }
         });
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        navBar.setVisibility(View.VISIBLE);
+        tabLayout.setVisibility(View.VISIBLE);
+    }
 }

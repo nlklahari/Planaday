@@ -47,15 +47,21 @@ public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvEventName;
+        private TextView tvEventLocation;
+        private TextView tvEventDuration;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvEventName = itemView.findViewById(R.id.tvEventName);
+            tvEventLocation = itemView.findViewById(R.id.tvEventLocation);
+            tvEventDuration = itemView.findViewById(R.id.tvEventDuration);
         }
 
         public void bind(PlanadayEvent event) {
             Log.i(TAG, "binding");
             tvEventName.setText(event.getEventName());
+            tvEventLocation.setText(event.getLocation());
+            tvEventDuration.setText(event.getDuration() + " hrs");
         }
     }
 }

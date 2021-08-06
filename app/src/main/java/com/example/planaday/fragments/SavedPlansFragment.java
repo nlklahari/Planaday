@@ -52,7 +52,6 @@ public class SavedPlansFragment extends Fragment {
 
     private TextView tvDisplayTextWhenNoSavedPlans;
 
-
     private ShimmerFrameLayout sflPlanPlaceholder;
 
     private FloatingActionButton fabCreatePlan;
