@@ -22,10 +22,10 @@
             android:layout_marginTop="25dp"
             app:placeholderText="Name your plan"
             android:hint="Plan Name"
-            app:boxBackgroundColor="@color/peach_puff"
+            app:boxBackgroundColor="@color/mint_cream"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
-            app:boxStrokeColor="@color/blush"
+            app:boxStrokeColor="@color/cotton_candy"
             app:boxStrokeWidth="0dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -44,10 +44,10 @@
             android:layout_marginTop="25dp"
             app:placeholderText="MM/dd/yyyy"
             android:hint="Date"
-            app:boxBackgroundColor="@color/peach_puff"
+            app:boxBackgroundColor="@color/mint_cream"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
-            app:boxStrokeColor="@color/blush"
+            app:boxStrokeColor="@color/cotton_candy"
             app:boxStrokeWidth="0dp"
             app:startIconDrawable="@drawable/ic_round_calendar_today_24">
 
@@ -67,10 +67,10 @@
             android:layout_below="@+id/tiDate"
             android:layout_marginTop="25dp"
             android:hint="@string/start_time"
-            app:boxBackgroundColor="@color/peach_puff"
+            app:boxBackgroundColor="@color/mint_cream"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
-            app:boxStrokeColor="@color/blush"
+            app:boxStrokeColor="@color/cotton_candy"
             app:boxStrokeWidth="0dp"
             app:startIconDrawable="@drawable/ic_baseline_access_time_24">
 
@@ -92,10 +92,10 @@
             android:layout_marginTop="25dp"
             android:layout_toEndOf="@+id/tiStartTime"
             android:hint="@string/end_time"
-            app:boxBackgroundColor="@color/peach_puff"
+            app:boxBackgroundColor="@color/mint_cream"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
-            app:boxStrokeColor="@color/blush"
+            app:boxStrokeColor="@color/cotton_candy"
             app:boxStrokeWidth="0dp"
             app:startIconDrawable="@drawable/ic_baseline_access_time_24">
 
@@ -113,7 +113,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tiStartTime"
-
             android:layout_marginTop="25dp"
             android:text="Distance"
             android:textSize="16sp" />
@@ -126,6 +125,8 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
+            app:thumbColor="@color/cotton_candy"
+            app:haloColor="@color/piggy_pink"
             android:layout_toEndOf="@id/tvDistanceField"
             android:stepSize="10.0"
             android:valueFrom="0"
@@ -166,8 +167,8 @@
             android:layout_marginTop="329dp"
             android:textOff="individual"
             android:textOn="group"
-            android:trackTint="@color/violet_crayola"
-            android:thumbTint="@color/violet_crayola"
+            android:trackTint="@color/sky_blue_crayola"
+            android:thumbTint="@color/cotton_candy"
             android:textSize="20sp"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -194,8 +195,8 @@
             android:layout_marginTop="371dp"
             android:textOff="indoor"
             android:textOn="outdoor"
-            android:trackTint="@color/violet_crayola"
-            android:thumbTint="@color/violet_crayola"
+            android:trackTint="@color/sky_blue_crayola"
+            android:thumbTint="@color/cotton_candy"
             android:textSize="20sp"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -219,8 +220,9 @@
             android:layout_below="@+id/tvEnvironmentTextOn"
             android:layout_marginTop="15dp"
             android:hint='Enter some keywords for your plan. (Ex: "education", "park", "restaurant") The more, the better!'
-            app:chipBackground="@color/peach_puff"
-            app:chipTextColor="@color/violet_crayola" />
+            app:chipTextSize="18dp"
+            app:chipBackground="@color/mint_cream"
+            app:chipTextColor="@color/middle_blue" />
 
         <LinearLayout
             android:layout_width="wrap_content"

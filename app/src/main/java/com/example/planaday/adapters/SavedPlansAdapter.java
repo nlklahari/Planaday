@@ -21,6 +21,7 @@ import com.example.planaday.models.Plan;
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
@@ -99,10 +100,16 @@ public class SavedPlansAdapter extends RecyclerView.Adapter<SavedPlansAdapter.Vi
     private void undoDelete() {
         savedPlans.add(recentlyDeletePosition,
                 recentlyDeletedItem);
+        recentlyDeletedItem.setUser(ParseUser.getCurrentUser());
         recentlyDeletedItem.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                Toast.makeText(context, "Plan restored", Toast.LENGTH_SHORT).show();
+                if (e != null) {
+                    Log.e("SavedPlansAdapter", "Error while saving: " + recentlyDeletedItem.getPlanName(), e);
+                } else {
+                    Toast.makeText(context, "Plan restored", Toast.LENGTH_SHORT).show();
+                    Log.i("SavedPlansAdapter", "Plan save was successful");
+                }
             }
         });
         notifyItemInserted(recentlyDeletePosition);

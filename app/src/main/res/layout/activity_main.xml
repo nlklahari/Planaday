@@ -20,7 +20,7 @@
                 android:id="@+id/tabLayout"
                 app:tabTextAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 app:tabInlineLabel="true"
-                app:tabRippleColor="@color/peach_puff" >
+                app:tabRippleColor="@color/mint_cream" >
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tab_saved_plans"
@@ -52,7 +52,7 @@
         android:id="@+id/fabCreatePlan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="@color/blush"
+        app:backgroundTint="@color/cotton_candy"
         android:overScrollMode="always"
         app:srcCompat="@drawable/ic_baseline_add_24"
         app:tint="@color/white"
@@ -74,10 +74,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:hideOnScroll="true"
-            android:backgroundTint="@color/blush"
+            android:backgroundTint="@color/middle_blue"
             app:fabAlignmentMode="end"
             app:navigationIcon="@drawable/ic_baseline_menu_24"
             app:menu="@menu/menu_bottom_navigation" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

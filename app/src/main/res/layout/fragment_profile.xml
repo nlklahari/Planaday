@@ -103,7 +103,7 @@
                 android:padding="10dp"
                 android:text="Log Out"
                 android:textAlignment="viewStart"
-                android:textColorLink="@color/dark_purple"
+                android:textColorLink="@color/piggy_pink"
                 android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>

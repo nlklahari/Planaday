@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.LoginActivity"
-    android:backgroundTint="@color/dark_purple"
+    android:backgroundTint="@color/piggy_pink"
     android:id="@+id/loginContent">
 
     <RelativeLayout
@@ -21,7 +21,7 @@
             android:layout_marginTop="150dp"
             app:srcCompat="@drawable/ic_baseline_person_24"
             android:background="@drawable/profile_pic_bg"
-            app:tint="@color/peach_puff" />
+            app:tint="@color/middle_blue" />
 
         <EditText
             android:id="@+id/etUsername"
@@ -96,7 +96,7 @@
             android:focusable="auto"
             android:focusableInTouchMode="true"
             android:text="SIGN UP"
-            android:textColor="@color/blush"
+            android:textColor="@color/cotton_candy"
             android:textSize="16sp"
             android:textStyle="bold" />
     </RelativeLayout>

@@ -17,11 +17,13 @@
             android:id="@+id/tvPlanName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tvPlanName"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/tvPlanTime"
-            android:textColor="@color/dark_purple"
-            android:textSize="25sp"
+            android:textColor="@color/middle_blue"
+            android:textSize="30sp"
+            android:textStyle="bold"
             tools:text="Plan #1" />
 
         <TextView
@@ -32,6 +34,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
             android:layout_alignTop="@id/tvPlanName"
+            android:layout_marginTop="10dp"
             android:textAlignment="textEnd"
             android:textSize="18sp"
             tools:text="4:30pm - 9:30pm" />
@@ -83,6 +86,6 @@
         android:layout_margin="30dp"
         app:srcCompat="@drawable/ic_baseline_share_24"
         app:tint="@color/white"
-        app:backgroundTint="@color/blush" />
+        app:backgroundTint="@color/cotton_candy" />
 
 </RelativeLayout>

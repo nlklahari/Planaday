@@ -46,7 +46,7 @@ public class LocationFetcher {
     /**
      * Fetches the user's current location if user allows access to location
      */
-    private void fetchLocation() {
+    public void fetchLocation() {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation()

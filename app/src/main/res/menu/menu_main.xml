@@ -5,19 +5,19 @@
     <item
         android:id="@+id/miCalendar"
         android:icon="@drawable/ic_round_calendar_today_24"
-        android:iconTint="@color/peach_puff"
+        android:iconTint="@color/mint_cream"
         android:title="Calendar"
         app:showAsAction="always" />
     <item
         android:id="@+id/miNotifications"
         android:icon="@drawable/ic_round_notifications_24"
-        android:iconTint="@color/peach_puff"
+        android:iconTint="@color/mint_cream"
         android:title="Notifications"
         app:showAsAction="always" />
     <item
         android:id="@+id/miProfile"
         android:icon="@drawable/ic_baseline_person_24"
-        android:iconTint="@color/peach_puff"
+        android:iconTint="@color/mint_cream"
         android:title="Profile"
         app:showAsAction="always" />
 </menu>

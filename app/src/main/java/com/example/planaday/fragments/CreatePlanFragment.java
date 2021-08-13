@@ -45,6 +45,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.hootsuite.nachos.NachoTextView;
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
 import com.hootsuite.nachos.validator.ChipifyingNachoValidator;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -258,7 +259,7 @@ public class CreatePlanFragment extends Fragment implements APIRequestsCompleteL
         plan.setUser(ParseUser.getCurrentUser());
         plan.saveInBackground(new SaveCallback() {
             @Override
-            public void done(com.parse.ParseException e) {
+            public void done(ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Error while saving", e);
                 } else {

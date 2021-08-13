@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
-    <item android:drawable="@color/violet_crayola"/>
+    <item android:drawable="@color/sky_blue_crayola"/>
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_baseline_person_24"
-            android:tint="@color/light_salmon"/>
+            android:src="@drawable/ic_baseline_person_24" />
     </item>
 </layer-list>

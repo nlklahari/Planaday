@@ -25,6 +25,7 @@ import com.example.planaday.fragments.ExploreFragment;
 import com.example.planaday.fragments.ProfileFragment;
 import com.example.planaday.fragments.SavedPlansFragment;
 import com.example.planaday.fragments.CalendarFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -145,4 +146,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setVisibility(visibility);
         tabLayout.setVisibility(visibility);
     }
+
+
 }

@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:rippleColor="@color/violet_crayola"
-    app:cardBackgroundColor="#F3ECEC"
+    app:rippleColor="@color/celeste"
+    app:cardBackgroundColor="@color/mint_cream"
     android:layout_margin="8dp">
 
     <RelativeLayout
@@ -21,8 +21,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_toStartOf="@+id/tvPlanTime"
-            android:textColor="@color/dark_purple"
+            android:textColor="@color/middle_blue"
             android:textSize="20sp"
+            android:textStyle="bold"
             tools:text="Plan #1" />
 
         <TextView
